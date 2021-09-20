@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+}
+#loader {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 100000000000;
+  background-color: #333;
+  color: #fff;
+}
+
+#loader > p {
+  position: absolute;
+  top: 50%;
+  margin-top: -0.5em;
+  width: 100%;
+  text-align: center;
+  font-size: 200%;
+  font-weight: bold;
+}
+
+#loader.hidden {
+  display: none;
+}
+
+.target {
+  position: absolute;
+  text-overflow: ellipsis;
+  width: 320px;
+  height: 200px;
+  font-size: 100%;
+  background-color: #fff;
+  display: hidden;
+  /*z-index: 1;*/
+}
+
+.target > img {
+  float: left;
+  display: block;
+  width: 32%;
+  padding: 4% 0 4% 4%;
+}
+
+.target > div {
+  margin-left: 36%;
+  width: 52%;
+  padding: 4%;
+}
+.target > p {
+  text-overflow: ellipsis;
+}
+
+.target > .detail {
+  padding: 3% 0;
+  text-align: center;
+  width: 92%;
+  color: #fff;
+  background-color: rgba(1, 1, 1, 0.6);
+  margin: 4%;
+}
+
+#target1 {
+  position: relative;
+
+  width: 15%;
+  height: 15%;
+  top: 30%;
+  left: 30%;
+  font-size: 100%;
+  text-overflow: ellipsis;
+}
+
+#target2 {
+  position: relative;
+
+  width: 15%;
+  height: 15%;
+
+  top: 50%;
+  left: 50%;
+  font-size: 100%;
+  text-overflow: ellipsis;
+}
+
+#target3 {
+  width: 960px;
+  height: 600px;
+  font-size: 300%;
+}
+
+#target4 {
+  width: 1280px;
+  height: 800px;
+  font-size: 400%;
+}
+
+#target5 {
+  position: relative;
+  width: 1600px;
+  height: 1000px;
+  font-size: 500%;
+}
+
+#target6 {
+  position: relative;
+  width: 3200px;
+  height: 2000px;
+  font-size: 1000%;
+}

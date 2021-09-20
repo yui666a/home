@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>名刺相曽3</title>
+
+    <!-- A-frame -> AR.jsの順番に読み込む -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.2.0/aframe.min.js"
+      integrity="sha512-/gO16YMp20RIqCZXZyvMlzALQqEoiDU0akshw25wFiXCRGl+0p/HPWkOd8HWFn6bnatGhxakGLfYhWaPPVQIyA=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <link rel="stylesheet" href="./style/arjs_load.css" />
+  </head>
+
+  <body style="margin: 0px; overflow: hidden">
+    <div class="arjs-loader">
+      <div>
+        読み込み中です，少々お待ちください．この表示が消えたらカメラで名刺を映してください
+      </div>
+    </div>
+
+    <a-scene
+      embedded
+      cursor="rayOrigin: mouse"
+      vr-mode-ui="enabled: false;"
+      renderer="logarithmicDepthBuffer: true;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    >
+      <!-- <a-assets>
+        <a-asset-item
+          id="vroid_glb"
+          src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/yui666a/ar.js_3.0_test/main/obj/v1.glb"
+        ></a-asset-item>
+      </a-assets> -->
+
+      <a-nft
+        type="nft"
+        url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/yui666a/ar.js_3.0_test/main/marker/aiso"
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance=".01"
+        smoothThreshold="5"
+      >
+      <!-- <a-nft
+        type="nft"
+        url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/yui666a/ar.js_3.0_test/main/marker/square"
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance=".01"
+        smoothThreshold="5"
+      > -->
+      
+        <!-- <a-entity
+          gltf-model="#vroid_glb"
+          position="50 0 -300"
+          rotation="0 180 0"
+          scale="100 100 100"
+        ></a-entity> -->
+
+        <!-- <a-entity position="0 0 0" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">  -->
+        <a-text
+          align="center"
+          value="AISO\nHitoshi"
+          color="red"
+          position="50 0 -200"
+          scale="100 100 100"
+          rotation="315 0 0"
+        ></a-text
+        ><!-- side="double" -->
+        <a-text
+          align="center"
+          value="Nagaoka University\nof Technology"
+          color="blue"
+          position="50 0 -400"
+          scale="100 100 100"
+          rotation="315 180 0"
+        ></a-text>
+        <!-- <a-text  align="center" value="XR, Front\npython, java, C#"        color="green" position="150 0 -300"  scale="100 100 100" rotation="315 90 0"></a-text> -->
+        <a-entity position="-50 0 -100">
+          <a-cylinder
+            src="./img/twitter.png"
+            id="twitter"
+            position="0 0 0"
+            height="15"
+            radius="35"
+            rotation="0 90 0"
+          ></a-cylinder>
+          <a-cylinder
+            src="./img/instagram.png"
+            id="instagram"
+            position="75 0 0"
+            height="15"
+            radius="35"
+            rotation="0 90 0"
+          ></a-cylinder>
+          <a-cylinder
+            src="./img/facebook.jpg"
+            id="facebook"
+            position="150 0 0"
+            height="15"
+            radius="35"
+            rotation="0 90 0"
+          ></a-cylinder>
+        </a-entity>
+      </a-nft>
+
+      <!-- <a-entity camera cursor-listener raycaster="objects: #target; far:1000;"></a-entity> -->
+      <a-entity camera>
+        <a-entity
+          cursor="fuse: true;"
+          position="0 0 -2"
+          geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.05;"
+          material="color: #acacac; shader: flat; opacity: 0.8"
+        >
+          <a-animation
+            begin="click"
+            easing="ease-in"
+            attribute="scale"
+            dur="150"
+            fill="forwards"
+            from="0.1 0.1 0.1"
+            to="1 1 1"
+          ></a-animation>
+          <a-animation
+            begin="cursor-fusing"
+            easing="ease-in"
+            attribute="scale"
+            dur="1500"
+            fill="backwards"
+            from="1 1 1"
+            to="0.1 0.1 0.1"
+          ></a-animation>
+        </a-entity>
+      </a-entity>
+    </a-scene>
+    <script src="./meisi_aiso_script.js"></script>
+  </body>
+</html>
