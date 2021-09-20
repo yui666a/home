@@ -1,0 +1,98 @@
+<!-- <!doctype HTML>
+<html> -->
+<!-- A-Frame ライブラリの読み込み -->
+<!-- <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script> -->
+<!-- AR.js ライブラリの読み込み -->
+<!-- <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.2.0/aframe/build/aframe-ar.js"></script>
+<body style='margin:0px; overflow:hidden;'> -->
+<!-- こっからA-Frame -->
+<!-- <a-scene embedded arjs> -->
+    <!--="debugUIEnabled:false;trackingMethod:best;" vr-mode-ui="enabled: false"--->
+
+    <!-- こっからARの世界。マーカー上になにを展開するかを書く -->
+    <!-- <a-marker preset="hiro"> -->
+        <!--objファイル: 形　mtlファイル: 表面　mtlなしでは透明になってしまう--->
+        <!-- <a-entity 
+            obj-model="obj: url(obj/12221_Cat_v1_l3.obj);
+            mtl: url(obj/12221_Cat_v1_l3.mtl)"
+            scale="0.02 0.02 0.02"
+            rotation="-90 0 0"
+        >
+        </a-entity> -->
+        <!--scale:サイズ　rotation: 角度 -90??-->
+             <!-- <a-text value="Cat AR by J" position="0 0.8 0" align="center"></a-text>
+    </a-marker> -->
+    <!-- arなのでカメラが必要 -->
+    <!-- <a-entity camera></a-entity>
+</a-scene> -->
+<!-- ここまででA-Frameおわり -->
+
+<!-- </body>
+</html> -->
+
+<!DOCTYPE html>
+  <head>
+    <!-- ① スクリプトの読み込み -->
+      <!-- A-Frame ライブラリの読み込み -->
+      <!-- <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script> -->
+      <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+      <!-- <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script> -->
+      <!-- AR.js ライブラリの読み込み -->
+      <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+      <!-- <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/aframe/build/aframe-ar-nft.js"></script> -->
+      <!-- <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.2.0/aframe/build/aframe-ar.js"></script> -->
+      <!-- <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script> -->
+  </head>
+
+  <body style='margin: 0; overflow: hidden;'>
+    <!-- シーンの追加とデバックUIを非表示 -->
+    <a-scene embedded arjs="debugUIEnabled:false;">
+      
+
+      <!-- OBJ形式のCGモデルの読み込み -->
+    <a-assets>
+      <a-asset-item id="obj" src="./obj/12221_Cat_v1_l3.obj"></a-asset-item>   <!-- objファイル -->
+      <a-asset-item id="mtl" src="./obj/12221_Cat_v1_l3.mtl"></a-asset-item>   <!-- mtlファイル -->
+    </a-assets>
+    <!-- マーカーを登録（プリセットされている「人」マーカー） -->
+    <a-marker preset="kanji">
+      <!-- マーカーの場所に OBJ 形式の 3DCG を置く -->
+      <a-obj-model
+        src="#obj"
+        mtl="#mtl"
+        scale="0.005 0.005 0.005"
+        position="0 0.5 0"
+        animation="property:rotation; from:0 0 0; to:0 360 0; dur:3000; easing:linear; loop:true;">
+      </a-obj-model>
+    </a-marker>
+
+      <!-- ② hiroマーカーでのソース -->
+      <!-- <a-marker preset="hiro">
+        <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#111">
+          <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
+          </a-animation>
+        </a-sphere>
+      </a-marker> -->
+      <a-marker preset="hiro">
+            <a-entity 
+                obj-model="obj: url(../obj/12221_Cat_v1_l3.obj);
+                mtl: url(../obj/12221_Cat_v1_l3.mtl)"
+                scale="0.02 0.02 0.02"
+                rotation="-90 0 0"
+            >
+            </a-entity>
+            <!--scale:サイズ　rotation: 角度 -90??-->
+                <a-text value="Cat AR by J" position="0 0.8 0" align="center"></a-text>
+        </a-marker>
+
+      <a-marker type='pattern' url='./marker/pattern-EdTech.patt'>
+        <a-sphere scale=".25 .25 .25" position="0 .5 0" color="#f00">
+          <a-animation attribute="position" to="0 1 0" direction="alternate" dur="2000" repeat="indefinite">
+          </a-animation>
+        </a-sphere>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
