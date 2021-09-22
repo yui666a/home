@@ -2,6 +2,9 @@
   --custom-horizontal-margin: 10vw;
   --custom-vertical-margin: 5vh;
 }
+html {
+  font-size: 24px;
+}
 
 body {
   margin: 0;
@@ -10,10 +13,24 @@ body {
   color: #fff;
 }
 
+h1 {
+  font-size: 2rem;
+}
+h1.category-title {
+  text-align: center;
+}
+tr {
+  height: 70px;
+}
+
 img {
   /* max-width: 100%; */
   height: auto;
   width: auto;
+}
+
+.flex-container {
+  display: flex;
 }
 
 .base {
@@ -83,9 +100,9 @@ img {
 .section-1 .hidari {
     background-color: transparent;
     /* text-align:end; */
-        display: flex;
-        justify-content:end;
-        align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
 }
 .section-1 .migi {
@@ -104,6 +121,14 @@ img {
 
 .section-2 {
   /* background: #0f0; */
+  
+}
+.section-2 .hidari{
+  /* background: #0f0; */
+  width: 30vw;
+  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.5);
+  
 }
 .section-3 {
   /* background: #00f; */
@@ -114,6 +139,20 @@ img {
 .section-5 {
   /* background: #0ff; */
 }
+.lang-name{
+    /* font-size:  */
+}
+.lang-logo{
+  height: 100px;
+}
+.lang-logo-table{
+  width: 100%;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+}
+
 .scroll {
   visibility: hidden;
   z-index: -1;
