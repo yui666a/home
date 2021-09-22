@@ -1,0 +1,120 @@
+:root {
+  --custom-horizontal-margin: 10vw;
+  --custom-vertical-margin: 5vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+}
+
+img {
+  /* max-width: 100%; */
+  height: auto;
+  width: auto;
+}
+
+.base {
+  width: 100vw;
+  height: 90vh;
+  margin: auto;
+  /* border: 2px solid #000; */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  perspective: 1px;
+}
+
+.scaler {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+.section {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  /* padding: 30px; */
+  /* background: #f00; */
+  position: absolute;
+  /* position: relative; */
+  top: 0;
+  left: 0;
+}
+
+.section-1 {
+  /* background: #f00; */
+  position: absolute;
+}
+
+.hidari {
+  position: absolute;
+  background: #f00;
+  width: 35vw;
+  height: 80vh;
+  left: var(--custom-horizontal-margin);
+  top: var(--custom-vertical-margin);
+}
+.migi {
+  position: absolute;
+  background: #f00;
+  width: 35vw;
+  height: 80vh;
+  right: var(--custom-horizontal-margin);
+  top: var(--custom-vertical-margin);
+}
+.ue {
+  position: absolute;
+  background: #f00;
+  width: 60vw;
+  height: 20vh;
+  top: var(--custom-vertical-margin);
+  left: 20vw;
+}
+
+.section-1{
+    /* padding: 5%; */
+}
+.section-1 .hidari {
+    background-color: transparent;
+    /* text-align:end; */
+        display: flex;
+        justify-content:end;
+        align-items: center;
+
+}
+.section-1 .migi {
+    background-color: transparent;
+}
+.section-1 .ue {
+    background-color: transparent;
+}
+.section-1 img {
+    height: 80%;
+
+}
+.profile-img {
+    
+}
+
+.section-2 {
+  /* background: #0f0; */
+}
+.section-3 {
+  /* background: #00f; */
+}
+.section-4 {
+  /* background: #ff0; */
+}
+.section-5 {
+  /* background: #0ff; */
+}
+.scroll {
+  visibility: hidden;
+  z-index: -1;
+}
