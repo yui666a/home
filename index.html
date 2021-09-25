@@ -1,53 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="./style.css" />
+    <!-- <link rel="stylesheet" href="./style.css" /> -->
+    <script src="./js/ua_redirector.js"></script>
   </head>
   <body>
-    <div class="top-img">画像</div>
-    <div class="profile flex-container">
-      <img class="profile-img" src="./img/aiso.jpeg" />
-      <div class="profile-text">
-        <p class="name">名前：相曽 結(AISO, Hitoshi)</p>
-        <p class="university">長岡技術科学大学</p>
-        <p class="department">情報・経営システム工学</p>
-        
-        <p class="belong">SAIN</p>
-        <p class="section">Engineering</p>
-        <p class="mobile">TEL: 070-3243-3562</p>
-        <p class="mail">haiso666@gmail.com</p>
-      </div>
-    </div>
+    <script>
+        var smartPhoneRedirect = UARedirector({
+            cond: 'mobile',
+            url: './sp.html'
+        });
+        var pcRedirect = UARedirector({
+            cond: 'pc',
+            url: './pc.html'
+        });
+        var tabletRedirect = UARedirector({
+            cond: 'tablet',
+            url: './pc.html'
+        });
 
-    <a href="./meisi_aiso3.html">リンク</a>
-    <div class="flex-container department">
-      <div class="reserch hover-up">
-        <a href="./reserch">
-          <div class=""><img src="./img/sunset.jpg" alt="ボタン画像１" /></div>
-          <div class="mask-reserch">
-            研究
-            <!-- <img src="./img/dev-background.png" alt="ボタン画像２" /> -->
-          </div>
-        </a>
-      </div>
-      <div class="dev hover-up">
-        <a href="./develop">
-          <div class=""><img src="./img/sunset.jpg" alt="ボタン画像１" /></div>
-          <div class="mask-dev">
-            開発
-            <!-- <img src="./img/dev-background.png" alt="ボタン画像２" /> -->
-          </div>
-        </a>
-      </div>
-      <div class="photo hover-up">
-        <a href="https://www.instagram.com/yui.ai/">
-          <div class=""><img src="./img/sunset.jpg" alt="ボタン画像１" /></div>
-          <div class="mask-photo">
-            写真
-            <!-- <img src="./img/dev-background.png" alt="ボタン画像２" /> -->
-          </div>
-        </a>
-      </div>
-    </div>
+        smartPhoneRedirect.redirect();
+        pcRedirect.redirect();
+        tabletRedirect.redirect();
+        </script>
   </body>
 </html>
