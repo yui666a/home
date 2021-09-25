@@ -1,53 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <link rel="stylesheet" href="./style.css" />
+    <meta charset="UTF-8" />
+    <title>AISO, Hitoshi portfolio</title>
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+      integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/style_sp.css" />
   </head>
   <body>
-    <div class="top-img">画像</div>
-    <div class="profile flex-container">
-      <img class="profile-img" src="./img/aiso.jpeg" />
-      <div class="profile-text">
-        <p class="name">名前：相曽 結(AISO, Hitoshi)</p>
-        <p class="university">長岡技術科学大学</p>
-        <p class="department">情報・経営システム工学</p>
-        
-        <p class="belong">SAIN</p>
-        <p class="section">Engineering</p>
-        <p class="mobile">TEL: 070-3243-3562</p>
-        <p class="mail">haiso666@gmail.com</p>
+    <!-- neumorphism design -->
+    <div id="main">
+      <div class="grid-container">
+        <div id="display"></div>
+        <button type="button" id="PROFILE" class="">PROFILE</button>
+        <button type="button" id="RESEARCH" class="">RESEARCH</button>
+        <button type="button" id="PORTFOLIO" class="">PORTFOLIO</button>
+        <button type="button" id="SKILL" class="">SKILL</button>
+        <button type="button" id="PASTIME" class="">PASTIME</button>
+        <button type="button" id="CONTACT" class="">CONTACT ME</button>
+        <button
+          type="button"
+          id="viewmore"
+          class=""
+          onclick="location.href='#sub'"
+        >
+          VIEW MORE<br />→
+        </button>
       </div>
     </div>
 
-    <a href="./meisi_aiso3.html">リンク</a>
-    <div class="flex-container department">
-      <div class="reserch hover-up">
-        <a href="./reserch">
-          <div class=""><img src="./img/sunset.jpg" alt="ボタン画像１" /></div>
-          <div class="mask-reserch">
-            研究
-            <!-- <img src="./img/dev-background.png" alt="ボタン画像２" /> -->
+    <div id="sub">
+      <section id="profile">
+        <h1>PROFILE プロフィール</h1>
+        <span>相曽　結（AISO, Hitoshi）</span><br />
+        <span>長岡技術科学大学　工学部　情報・経営システム工学課程　４年</span>
+        知識システム研究室
+        <br /><br />
+        education<br />
+        2022/3<br />　長岡技術科学大学 工学部 情報・経営システム工学課程 卒業<br />
+        2020/4<br />　長岡技術科学大学 工学部 情報・経営システム工学課程
+        編入学<br />
+        2020/3<br />　奈良工業高等専門学校 情報工学科 卒業<br />
+        2016/8<br />　10ヶ月間，アメリカ オハイオ州 Lakeside High
+        Schoolに交換留学<br />
+        2014/4<br />　奈良工業高等専門学校 情報工学科 入学<br />
+        <br />
+        activity<br />
+        2020/4 ~ 現在<br />
+        　SAIN (Startup And Innovation Nagaoka) 所属<br />
+        2017/8 ~ 2020/3<br />
+        　Returnee(帰国者)として，出国前の日本人留学生の育成を行う<br />
+        2018/4 ~ 2019/3<br />
+        　奈良工業高等専門学校　文化祭実行委員会　学科展・模擬店部長<br />
+        　奈良工業高等専門学校　寮祭　実行委員長<br />
+
+        2017/8 ~ 2019/3<br />
+        　奈良工業高等専門学校　文化祭実行委員会　学科展・模擬店部所属<br />
+        2014/4 ~ 2016/3<br />
+        　奈良工業高等専門学校　文化祭実行委員会　管理部所属<br />
+
+        <!-- history<br/>部活などかく？ -->
+      </section>
+      <section id="research">
+        <h1>RESEARCH 研究</h1>
+        現在<br />
+        文書中の暗示的怒りの検出に関する研究<br />
+        高専時代<br />
+        VRを用いた半導体教育に関する研究<br />
+      </section>
+      <section id="portfolio">
+        <h1>PORTFOLIO ポートフォリオ</h1>
+      </section>
+      <section id="skill">
+        <h1>SLILLS 開発スキル</h1>
+      </section>
+      <section id="pastime">
+        <h1>PASTIME 趣味</h1>
+      </section>
+      <section id="contact">
+        <h1>CONTACT 連絡</h1>
+        <div class="flex-container">
+          <div class="icon-item">
+            <a href="https://www.facebook.com/hitoshi.aiso/" class="icon-link"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
           </div>
-        </a>
-      </div>
-      <div class="dev hover-up">
-        <a href="./develop">
-          <div class=""><img src="./img/sunset.jpg" alt="ボタン画像１" /></div>
-          <div class="mask-dev">
-            開発
-            <!-- <img src="./img/dev-background.png" alt="ボタン画像２" /> -->
+          <div class="icon-item">
+            <a href="https://www.instagram.com/yui.ai/" class="icon-link"
+              ><i class="fab fa-instagram"></i
+            ></a>
           </div>
-        </a>
-      </div>
-      <div class="photo hover-up">
-        <a href="https://www.instagram.com/yui.ai/">
-          <div class=""><img src="./img/sunset.jpg" alt="ボタン画像１" /></div>
-          <div class="mask-photo">
-            写真
-            <!-- <img src="./img/dev-background.png" alt="ボタン画像２" /> -->
+          <div class="icon-item">
+            <a href="https://www.instagram.com/yui.ai/" class="icon-link">
+              <i class="far fa-envelope"></i>
+            </a>
           </div>
-        </a>
-      </div>
+        </div>
+      </section>
     </div>
+
+    <script type="text/javascript" src="./js/test.js"></script>
   </body>
 </html>
