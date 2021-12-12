@@ -1,37 +1,48 @@
 html {
   background-color: #ebecf0;
   font-size: 16px;
+  height: 100%;
 }
 body {
   background-color: #ebecf0;
   font-size: 16px;
+  height: 100%;
+  margin: 0;
 }
+
 h1 {
-  /* margin: 0 5%; */
   font-size: 1rem;
   color: grey;
 }
-#main, #sub {
+#main,
+#sub {
   margin: 5%;
-  height: 100vh;
+  height: 95%;
 }
-#sub{
+
+#sub {
   margin: 0 5%;
+  /* display: none; */
 }
+
 .grid-container {
-  height: 100%;
+  height: calc(60% - 60px);
   display: grid;
-  grid-template-rows: 40% 15% 15% 15%;
+  grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
-    " display   display   display  "
     " contents1 contents2 viewmore "
     " contents3 contents4 viewmore "
     " contents5 contents6 viewmore ";
-  /* " _ nav       footer    aside b "; */
 }
+
 #display {
-  grid-area: display;
+  height: 40%;
+  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: auto;
+  /* width: 100%; */
+  /* grid-area: display; */
   border-radius: 50px;
   background: #ededed;
   box-shadow: inset 20px 20px 60px #c9c9c9, inset -20px -20px 60px #ffffff;
@@ -84,7 +95,8 @@ button {
   color: #61677c;
   font-weight: bold;
   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
-  box-shadow: 30px 30px 60px #c5cac9, -30px -30px 60px white, inset -10px -7px 24px 0px rgba(0, 0, 0, 0.1), inset 18px 21px 24px 0px white;
+  box-shadow: 30px 30px 60px #c5cac9, -30px -30px 60px white,
+    inset -10px -7px 24px 0px rgba(0, 0, 0, 0.1), inset 18px 21px 24px 0px white;
   transition: all 0.2s ease-in-out;
   /* transition: 0.25s box-shadow ease-in-out; */
   cursor: pointer;
@@ -100,8 +112,6 @@ button:active {
   box-shadow: 0 0 4px #c5cac9, 0 0 0 transparent,
     inset -10px -7px 24px 0px white, inset 18px 21px 24px 0px rgba(0, 0, 0, 0.1);
 }
-
-
 
 .icon-item {
   list-style: none;
