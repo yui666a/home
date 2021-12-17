@@ -11,7 +11,7 @@ body {
 }
 
 h1 {
-  font-size: 1rem;
+  font-size: 1.3em;
   color: grey;
 }
 #main,
@@ -24,7 +24,9 @@ h1 {
   margin: 0 5%;
   /* display: none; */
 }
-
+.flex-container {
+  display: flex;
+}
 .grid-container {
   height: calc(60% - 60px);
   display: grid;
