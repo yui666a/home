@@ -14,6 +14,10 @@ h1 {
   font-size: 1.3em;
   color: grey;
 }
+span {
+  display: inline-block;
+}
+
 #main,
 #sub {
   margin: 5%;
@@ -22,7 +26,7 @@ h1 {
 
 #sub {
   margin: 0 5%;
-  /* display: none; */
+  display: none;
 }
 .flex-container {
   display: flex;
@@ -43,14 +47,12 @@ h1 {
   overflow: hidden;
   overflow-x: auto;
   overflow-y: auto;
-  /* width: 100%; */
-  /* grid-area: display; */
   border-radius: 50px;
   background: #ededed;
   box-shadow: inset 20px 20px 60px #c9c9c9, inset -20px -20px 60px #ffffff;
   background: #ebecf0;
   padding: 30px;
-  font-size: 2rem;
+  font-size: 1.1em;
 }
 #PROFILE,
 #RESEARCH,
