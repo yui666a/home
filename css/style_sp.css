@@ -27,7 +27,7 @@ span {
 
 #sub {
   margin: 0 5%;
-  display: none;
+  /* display: none; */
 }
 .flex-container {
   display: flex;
