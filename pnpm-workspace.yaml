@@ -1,0 +1,5 @@
+# 単一パッケージ構成。pnpm の設定置き場として使用する。
+# (将来 packages/* に分割する場合はここに packages を追記)
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

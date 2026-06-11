@@ -22,10 +22,12 @@
   },
   "homepage": "https://github.com/yui666a/home#readme",
   "dependencies": {
-    "astro": "^6.4.6"
+    "astro": "^6.4.6",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@types/three": "^0.184.1",
     "typescript": "^6.0.3",
     "vitest": "^4.1.8"
   }
