@@ -1,0 +1,17 @@
+---
+import { t, otherLocale, type Locale } from '../i18n/utils';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const other = otherLocale(locale);
+const otherHref = other === 'ja' ? '/' : '/en/';
+---
+<nav class="container" style="display:flex;justify-content:space-between;align-items:center;padding-top:1.25rem;">
+  <a href={locale === 'ja' ? '/' : '/en/'} style="font-weight:700;text-decoration:none;">AISO</a>
+  <div style="display:flex;gap:1rem;align-items:center;font-size:0.9rem;">
+    <a href="#about">{t(locale, 'nav.about')}</a>
+    <a href="#skills">{t(locale, 'nav.skills')}</a>
+    <a href="#works">{t(locale, 'nav.works')}</a>
+    <a href="#links">{t(locale, 'nav.links')}</a>
+    <a href={otherHref} style="border:1px solid var(--fg);padding:0.15rem 0.5rem;border-radius:4px;text-decoration:none;">{t(locale, 'lang.switchTo')}</a>
+  </div>
+</nav>

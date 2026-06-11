@@ -1,0 +1,21 @@
+---
+import { t, type Locale } from '../i18n/utils';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+// TODO(未確定): 実際のURLに差し替える
+const links = [
+  { label: 'GitHub', url: 'https://github.com/yui666a' },
+  { label: 'Qiita', url: 'https://qiita.com/' },
+  { label: 'Zenn', url: 'https://zenn.dev/' },
+  { label: 'X', url: 'https://x.com/' },
+  { label: 'Mail', url: 'mailto:haiso666@gmail.com' },
+];
+---
+<section id="links" class="container">
+  <h2>{t(locale, 'links.heading')}</h2>
+  <ul style="list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:1rem;">
+    {links.map((l) => (
+      <li><a href={l.url} target="_blank" rel="noopener">{l.label}</a></li>
+    ))}
+  </ul>
+</section>

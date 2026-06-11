@@ -1,0 +1,22 @@
+---
+import { t, type Locale } from '../i18n/utils';
+import { works } from '../data/works';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+---
+<section id="works" class="container">
+  <h2>{t(locale, 'works.heading')}</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">
+    {works.map((w) => (
+      <a href={w.url} target="_blank" rel="noopener" style="border:1px solid #e2e2dd;border-radius:8px;padding:1rem;text-decoration:none;display:block;">
+        <h3 style="margin:0 0 0.4rem;font-size:1.05rem;">{locale === 'ja' ? w.title.ja : w.title.en}</h3>
+        <p class="muted" style="margin:0 0 0.6rem;font-size:0.9rem;">{locale === 'ja' ? w.summary.ja : w.summary.en}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.3rem;">
+          {w.tags.map((tag) => (
+            <span style="font-size:0.75rem;background:#efeee9;padding:0.1rem 0.5rem;border-radius:4px;">{tag}</span>
+          ))}
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

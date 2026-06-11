@@ -1,0 +1,12 @@
+---
+import { t, type Locale } from '../i18n/utils';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const playHref = locale === 'ja' ? '/playground/' : '/en/playground/';
+---
+<header class="container" style="padding:5rem 0 3rem;">
+  <h1 style="font-size:2.4rem;margin:0 0 0.5rem;">{t(locale, 'hero.name')}</h1>
+  <p class="muted" style="font-size:1.1rem;margin:0 0 0.25rem;">{t(locale, 'hero.role')}</p>
+  <p style="margin:0 0 1.5rem;">{t(locale, 'hero.tagline')}</p>
+  <a href={playHref} style="display:inline-block;border:1px solid var(--accent);color:var(--accent);padding:0.5rem 1rem;border-radius:6px;text-decoration:none;">▶ {t(locale, 'nav.playground')}</a>
+</header>
