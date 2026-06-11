@@ -1,0 +1,9 @@
+{
+  "nav": { "about": "About", "skills": "Skills", "works": "Works", "links": "Links", "playground": "Playground" },
+  "hero": { "name": "相曽 結", "role": "Software Engineer", "tagline": "TODO(未確定): 自分を表す一言" },
+  "about": { "heading": "About" },
+  "skills": { "heading": "Skills" },
+  "works": { "heading": "Works" },
+  "links": { "heading": "Links" },
+  "lang": { "switchTo": "EN" }
+}
