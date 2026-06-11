@@ -1,12 +1,21 @@
 ---
 import { t, type Locale } from '../i18n/utils';
+import HeroBackground from './HeroBackground.astro';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const playHref = locale === 'ja' ? '/playground/' : '/en/playground/';
 ---
-<header class="container" style="padding:5rem 0 3rem;">
-  <h1 style="font-size:2.4rem;margin:0 0 0.5rem;">{t(locale, 'hero.name')}</h1>
-  <p class="muted" style="font-size:1.1rem;margin:0 0 0.25rem;">{t(locale, 'hero.role')}</p>
-  <p style="margin:0 0 1.5rem;">{t(locale, 'hero.tagline')}</p>
-  <a href={playHref} style="display:inline-block;border:1px solid var(--accent);color:var(--accent);padding:0.5rem 1rem;border-radius:6px;text-decoration:none;">▶ {t(locale, 'nav.playground')}</a>
-</header>
+<div style="position:relative; overflow:hidden;">
+  <HeroBackground />
+  <header class="container" style="position:relative; z-index:1; padding-block: var(--s-7) var(--s-6); min-height: 64vh; display:flex; flex-direction:column; justify-content:center;">
+    <h1 style="font-size: clamp(2.6rem, 8vw, 4rem); margin-bottom: var(--s-3); letter-spacing:-0.03em;">{t(locale, 'hero.name')}</h1>
+    <p class="muted" style="font-size: 1.05rem; font-weight: 500; letter-spacing: 0.02em; margin-bottom: var(--s-2);">{t(locale, 'hero.role')}</p>
+    <p style="font-size: 1.05rem; max-width: 34em; margin-bottom: var(--s-5);">{t(locale, 'hero.tagline')}</p>
+    <a
+      href={playHref}
+      style="display:inline-flex; align-items:center; gap:0.5rem; border:1px solid var(--accent); color:var(--accent); padding:0.6rem 1.2rem; border-radius:999px; text-decoration:none; font-size:0.95rem; font-weight:500; width:fit-content; backdrop-filter: blur(4px);"
+    >
+      <span style="font-size:0.8em;">▶</span> {t(locale, 'nav.playground')}
+    </a>
+  </header>
+</div>

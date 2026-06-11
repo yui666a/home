@@ -1,3 +1,18 @@
 ---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Skills from '../components/Skills.astro';
+import Works from '../components/Works.astro';
+import Links from '../components/Links.astro';
+const locale = 'ja' as const;
 ---
-<html lang="ja"><body><h1>WIP</h1></body></html>
+<Base locale={locale} title="相曽 結 | Portfolio" description="相曽 結のポートフォリオ">
+  <Nav locale={locale} />
+  <Hero locale={locale} />
+  <About locale={locale} />
+  <Skills locale={locale} />
+  <Works locale={locale} />
+  <Links locale={locale} />
+</Base>

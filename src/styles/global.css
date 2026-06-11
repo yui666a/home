@@ -1,22 +1,81 @@
 :root {
+  /* color */
   --bg: #fbfbf9;          /* オフホワイト */
   --fg: #1a1a1a;          /* ほぼ黒 */
   --muted: #6b6b6b;
+  --line: #e6e5e0;        /* 罫線・境界 */
   --accent: #2f6df0;      /* TODO(未確定): 差し色1色。仮で青 */
-  --maxw: 760px;          /* 1カラム読みやすい幅 */
-  --space: 1.5rem;
-  --font-sans: system-ui, -apple-system, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+
+  /* layout */
+  --maxw: 720px;          /* 1カラム読みやすい幅 */
+  --pad: clamp(1.25rem, 5vw, 2rem);
+
+  /* spacing scale (8px ベース) */
+  --s-1: 0.5rem;
+  --s-2: 0.75rem;
+  --s-3: 1rem;
+  --s-4: 1.5rem;
+  --s-5: 2.5rem;
+  --s-6: 4rem;
+  --s-7: 6rem;
+
+  /* type */
+  --font-sans: "Inter", "Noto Sans JP", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", sans-serif;
+  --leading: 1.8;
 }
+
 * { box-sizing: border-box; }
-html { font-size: 17px; }
-body {
-  margin: 0; background: var(--bg); color: var(--fg);
-  font-family: var(--font-sans); line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
+
+html {
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
-a { color: inherit; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: var(--leading);
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; text-underline-offset: 0.2em; }
 img { max-width: 100%; height: auto; display: block; }
-.container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--space); }
-section { padding: 4rem 0; }
-h1, h2 { line-height: 1.25; font-weight: 700; }
+
+/* layout helpers */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-inline: var(--pad);
+}
+
+section { padding-block: var(--s-7); }
+
+/* セクション間に薄い区切りを入れて、余白にリズムを持たせる */
+section + section { border-top: 1px solid var(--line); }
+
+/* typography */
+h1, h2, h3 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--s-4);
+}
+
+p { margin: 0; }
 .muted { color: var(--muted); }
