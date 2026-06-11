@@ -1,0 +1,22 @@
+:root {
+  --bg: #fbfbf9;          /* オフホワイト */
+  --fg: #1a1a1a;          /* ほぼ黒 */
+  --muted: #6b6b6b;
+  --accent: #2f6df0;      /* TODO(未確定): 差し色1色。仮で青 */
+  --maxw: 760px;          /* 1カラム読みやすい幅 */
+  --space: 1.5rem;
+  --font-sans: system-ui, -apple-system, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+}
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--font-sans); line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+img { max-width: 100%; height: auto; display: block; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--space); }
+section { padding: 4rem 0; }
+h1, h2 { line-height: 1.25; font-weight: 700; }
+.muted { color: var(--muted); }
