@@ -3,8 +3,8 @@
 interface Props { num: string; label: string; }
 const { num, label } = Astro.props;
 ---
-<h2 style="display:flex; align-items:baseline; gap:0.7rem; margin-bottom: var(--s-4);">
-  <span style="color:var(--accent); font-variant-numeric:tabular-nums;">{num}</span>
-  <span style="width:1.6rem; height:1px; background:var(--line); align-self:center;"></span>
+<h2 class="flex items-baseline gap-[0.7rem] mb-[1.5rem]">
+  <span class="text-accent [font-variant-numeric:tabular-nums]">{num}</span>
+  <span class="w-[1.6rem] h-px bg-line self-center"></span>
   <span>{label}</span>
 </h2>
