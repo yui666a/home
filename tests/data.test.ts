@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { works } from '../src/data/works';
+import { describe, expect, it } from 'vitest';
 import { skills } from '../src/data/skills';
 import { timeline } from '../src/data/timeline';
+import { works } from '../src/data/works';
 
 describe('works data', () => {
   it('各 work は必須フィールドを持つ', () => {

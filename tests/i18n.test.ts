@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { getDict, t, otherLocale } from '../src/i18n/utils';
+import { describe, expect, it } from 'vitest';
+import { getDict, otherLocale, t } from '../src/i18n/utils';
 
 describe('i18n utils', () => {
   it('ja と en が同じキー集合を持つ', () => {
