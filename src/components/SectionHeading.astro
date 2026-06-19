@@ -1,0 +1,10 @@
+---
+// 番号付きセクション見出し。「01 — ABOUT」のように表示し、構造感と個性を出す。
+interface Props { num: string; label: string; }
+const { num, label } = Astro.props;
+---
+<h2 style="display:flex; align-items:baseline; gap:0.7rem; margin-bottom: var(--s-4);">
+  <span style="color:var(--accent); font-variant-numeric:tabular-nums;">{num}</span>
+  <span style="width:1.6rem; height:1px; background:var(--line); align-self:center;"></span>
+  <span>{label}</span>
+</h2>
