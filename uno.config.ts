@@ -14,11 +14,8 @@ export default defineConfig({
     fontFamily: {
       sans: '"Inter","Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif',
     },
-    maxWidth: {
-      content: '720px',
-    },
   },
-  // presetWind4 v66 は theme.maxWidth を解釈しないため、max-w-content をルールで補完する
+  // presetWind4 v66 は theme.maxWidth を解釈しないため、max-w-content をルールで定義する(=--maxw: 720px)
   rules: [['max-w-content', { 'max-width': '720px' }]],
   // 現行の余白スケール(8pxベース)を任意値ではなくショートカット可能にしておく
   shortcuts: {
