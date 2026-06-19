@@ -4,7 +4,7 @@ import { works } from '../data/works';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 ---
-<section id="works" class="container">
+<section id="works" class="container reveal">
   <h2>{t(locale, 'works.heading')}</h2>
   <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap: var(--s-3);">
     {works.map((w) => (
