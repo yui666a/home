@@ -5,17 +5,17 @@ interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const playHref = locale === 'ja' ? '/playground/' : '/en/playground/';
 ---
-<div style="position:relative; overflow:hidden;">
+<div class="relative overflow-hidden">
   <HeroBackground />
-  <header class="container" style="position:relative; z-index:1; padding-block: var(--s-7) var(--s-6); min-height: 64vh; display:flex; flex-direction:column; justify-content:center;">
-    <h1 style="font-size: clamp(2.6rem, 8vw, 4rem); margin-bottom: var(--s-3); letter-spacing:-0.03em;">{t(locale, 'hero.name')}</h1>
-    <p class="muted" style="font-size: 1.05rem; font-weight: 500; letter-spacing: 0.02em; margin-bottom: var(--s-2);">{t(locale, 'hero.role')}</p>
-    <p style="font-size: 1.05rem; max-width: 34em; margin-bottom: var(--s-5);">{t(locale, 'hero.tagline')}</p>
+  <header class="container relative z-[1] pt-[6rem] pb-[4rem] min-h-[64vh] flex flex-col justify-center">
+    <h1 class="text-[clamp(2.6rem,8vw,4rem)] mb-[1rem] tracking-[-0.03em]">{t(locale, 'hero.name')}</h1>
+    <p class="text-muted text-[1.05rem] font-medium tracking-[0.02em] mb-[0.75rem]">{t(locale, 'hero.role')}</p>
+    <p class="text-[1.05rem] max-w-[34em] mb-[2.5rem]">{t(locale, 'hero.tagline')}</p>
     <a
       href={playHref}
-      style="display:inline-flex; align-items:center; gap:0.5rem; border:1px solid var(--accent); color:var(--accent); padding:0.6rem 1.2rem; border-radius:999px; text-decoration:none; font-size:0.95rem; font-weight:500; width:fit-content; backdrop-filter: blur(4px);"
+      class="inline-flex items-center gap-[0.5rem] border border-accent text-accent px-[1.2rem] py-[0.6rem] rounded-full no-underline text-[0.95rem] font-medium w-fit backdrop-blur-[4px]"
     >
-      <span style="font-size:0.8em;">▶</span> {t(locale, 'nav.playground')}
+      <span class="text-[0.8em]">▶</span> {t(locale, 'nav.playground')}
     </a>
   </header>
 </div>
