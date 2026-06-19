@@ -1,0 +1,28 @@
+---
+import { m } from '../paraglide/messages.js';
+import type { Locale } from '../i18n/utils';
+import { works } from '../data/works';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+---
+<section id="works" class="container reveal section-y">
+  <h2>{m.works_heading({}, { locale })}</h2>
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-[1rem]">
+    {works.map((w) => (
+      <a
+        href={w.url}
+        target="_blank"
+        rel="noopener"
+        class="border border-line rounded-[12px] p-[1.5rem] no-underline block bg-white transition-[border-color] duration-150"
+      >
+        <h3 class="mt-0 mb-[0.75rem] text-[1.05rem] tracking-[-0.01em]">{locale === 'ja' ? w.title.ja : w.title.en}</h3>
+        <p class="text-muted mt-0 mb-[1rem] text-[0.9rem] leading-[1.6]">{locale === 'ja' ? w.summary.ja : w.summary.en}</p>
+        <div class="flex flex-wrap gap-[0.4rem]">
+          {w.tags.map((tag) => (
+            <span class="text-[0.72rem] text-muted border border-line px-[0.55rem] py-[0.15rem] rounded-full">{tag}</span>
+          ))}
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

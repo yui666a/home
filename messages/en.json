@@ -1,0 +1,16 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "nav_about": "About",
+  "nav_skills": "Skills",
+  "nav_works": "Works",
+  "nav_links": "Links",
+  "nav_playground": "Playground",
+  "hero_name": "AISO, Hitoshi",
+  "hero_role": "Software Engineer",
+  "hero_tagline": "TODO(未確定): a one-line tagline",
+  "about_heading": "About",
+  "skills_heading": "Skills",
+  "works_heading": "Works",
+  "links_heading": "Links",
+  "lang_switch_to": "JP"
+}

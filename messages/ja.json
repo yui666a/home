@@ -1,0 +1,16 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "nav_about": "About",
+  "nav_skills": "Skills",
+  "nav_works": "Works",
+  "nav_links": "Links",
+  "nav_playground": "Playground",
+  "hero_name": "相曽 結",
+  "hero_role": "Software Engineer",
+  "hero_tagline": "TODO(未確定): 自分を表す一言",
+  "about_heading": "About",
+  "skills_heading": "Skills",
+  "works_heading": "Works",
+  "links_heading": "Links",
+  "lang_switch_to": "EN"
+}
