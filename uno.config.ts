@@ -1,5 +1,5 @@
-import { defineConfig } from 'unocss';
 import presetWind4 from '@unocss/preset-wind4';
+import { defineConfig } from 'unocss';
 
 export default defineConfig({
   presets: [presetWind4()],
@@ -11,9 +11,8 @@ export default defineConfig({
       line: '#e6e5e0',
       accent: '#2f6df0',
     },
-    fontFamily: {
-      sans: '"Inter","Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif',
-    },
+    // フォントファミリーは global.css の --font-sans が正本(body に適用)。
+    // presetWind4 の theme.font とは重複するため、ここでは定義しない。
   },
   // presetWind4 v66 は theme.maxWidth を解釈しないため、max-w-content をルールで定義する(=--maxw: 720px)
   rules: [['max-w-content', { 'max-width': '720px' }]],
