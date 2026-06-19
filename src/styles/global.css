@@ -65,9 +65,8 @@ img {
   padding-inline: var(--pad);
 }
 
-section {
-  padding-block: var(--s-7);
-}
+/* 縦余白は各コンポーネントの section-y(=py-[6rem]) に一本化したため、
+   ここでは padding-block を定義しない(UnoCSS と二重適用になるのを防ぐ) */
 
 /* セクション間に薄い区切りを入れて、余白にリズムを持たせる */
 section + section {
