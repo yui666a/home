@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { works } from '../src/data/works';
 import { skills } from '../src/data/skills';
+import { timeline } from '../src/data/timeline';
 
 describe('works data', () => {
   it('各 work は必須フィールドを持つ', () => {
@@ -26,6 +27,17 @@ describe('skills data', () => {
       expect(c.category.ja).toBeTruthy();
       expect(c.category.en).toBeTruthy();
       expect(c.items.length).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe('timeline data', () => {
+  it('各エントリは period と両言語の title を持つ', () => {
+    expect(timeline.length).toBeGreaterThan(0);
+    for (const e of timeline) {
+      expect(e.period).toBeTruthy();
+      expect(e.title.ja).toBeTruthy();
+      expect(e.title.en).toBeTruthy();
     }
   });
 });
