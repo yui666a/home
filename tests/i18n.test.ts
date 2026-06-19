@@ -1,21 +1,25 @@
 import { describe, expect, it } from 'vitest';
-import { getDict, otherLocale, t } from '../src/i18n/utils';
+import en from '../messages/en.json';
+import ja from '../messages/ja.json';
+import { m } from '../src/paraglide/messages.js';
 
-describe('i18n utils', () => {
-  it('ja と en が同じキー集合を持つ', () => {
-    const ja = getDict('ja');
-    const en = getDict('en');
-    expect(Object.keys(ja).sort()).toEqual(Object.keys(en).sort());
-    expect(Object.keys(ja.nav).sort()).toEqual(Object.keys(en.nav).sort());
+describe('i18n (Paraglide)', () => {
+  it('ja と en が同じメッセージキー集合を持つ', () => {
+    const keysOf = (dict: Record<string, unknown>) =>
+      Object.keys(dict)
+        .filter((k) => k !== '$schema')
+        .sort();
+    expect(keysOf(ja)).toEqual(keysOf(en));
   });
 
-  it('t() がネストキーを解決する', () => {
-    expect(t('ja', 'nav.works')).toBe('Works');
-    expect(t('en', 'hero.name')).toBe('AISO, Hitoshi');
+  it('メッセージ関数が locale に応じた文字列を返す', () => {
+    expect(m.nav_works({}, { locale: 'ja' })).toBe('Works');
+    expect(m.hero_name({}, { locale: 'ja' })).toBe('相曽 結');
+    expect(m.hero_name({}, { locale: 'en' })).toBe('AISO, Hitoshi');
   });
 
-  it('otherLocale() が言語を反転する', () => {
-    expect(otherLocale('ja')).toBe('en');
-    expect(otherLocale('en')).toBe('ja');
+  it('言語切替ラベルが相手の言語を指す', () => {
+    expect(m.lang_switch_to({}, { locale: 'ja' })).toBe('EN');
+    expect(m.lang_switch_to({}, { locale: 'en' })).toBe('JP');
   });
 });

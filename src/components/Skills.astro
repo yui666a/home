@@ -1,11 +1,12 @@
 ---
-import { t, type Locale } from '../i18n/utils';
+import { m } from '../paraglide/messages.js';
+import type { Locale } from '../i18n/utils';
 import { skills } from '../data/skills';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 ---
 <section id="skills" class="container reveal section-y">
-  <h2>{t(locale, 'skills.heading')}</h2>
+  <h2>{m.skills_heading({}, { locale })}</h2>
   {skills.map((cat) => (
     <div class="mb-[2.5rem]">
       <h3 class="text-[0.9rem] font-semibold text-muted mb-[1rem]">{locale === 'ja' ? cat.category.ja : cat.category.en}</h3>

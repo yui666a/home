@@ -1,5 +1,6 @@
 ---
-import { t, type Locale } from '../i18n/utils';
+import { m } from '../paraglide/messages.js';
+import type { Locale } from '../i18n/utils';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 // TODO(未確定): 実際のURLに差し替える
@@ -12,7 +13,7 @@ const links = [
 ];
 ---
 <section id="links" class="container reveal section-y">
-  <h2>{t(locale, 'links.heading')}</h2>
+  <h2>{m.links_heading({}, { locale })}</h2>
   <ul class="list-none p-0 m-0 flex flex-wrap gap-[1.5rem]">
     {links.map((l) => (
       <li>
