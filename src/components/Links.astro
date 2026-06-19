@@ -11,12 +11,12 @@ const links = [
   { label: 'Mail', url: 'mailto:haiso666@gmail.com' },
 ];
 ---
-<section id="links" class="container reveal">
+<section id="links" class="container reveal section-y">
   <h2>{t(locale, 'links.heading')}</h2>
-  <ul style="list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap: var(--s-4);">
+  <ul class="list-none p-0 m-0 flex flex-wrap gap-[1.5rem]">
     {links.map((l) => (
       <li>
-        <a href={l.url} target="_blank" rel="noopener" style="font-size:0.95rem; text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:0.15rem;">{l.label}</a>
+        <a href={l.url} target="_blank" rel="noopener" class="text-[0.95rem] no-underline border-b border-line pb-[0.15rem]">{l.label}</a>
       </li>
     ))}
   </ul>
