@@ -1,14 +1,19 @@
 import { defineConfig } from 'astro/config';
 import UnoCSS from '@unocss/astro';
-import paraglide from '@inlang/paraglide-astro';
+import { paraglideVitePlugin } from '@inlang/paraglide-js';
 
 export default defineConfig({
   site: 'https://yui666a.me',
   base: '/',
-  integrations: [
-    UnoCSS({ injectReset: false }),
-    paraglide({ project: './project.inlang', outdir: './src/paraglide' }),
-  ],
+  integrations: [UnoCSS({ injectReset: false })],
+  vite: {
+    plugins: [
+      paraglideVitePlugin({
+        project: './project.inlang',
+        outdir: './src/paraglide',
+      }),
+    ],
+  },
   i18n: {
     defaultLocale: 'ja',
     locales: ['ja', 'en'],

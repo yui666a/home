@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/yui666a/home#readme",
   "dependencies": {
-    "@inlang/paraglide-astro": "^0.4.1",
     "@inlang/paraglide-js": "^2.20.0",
     "astro": "^6.4.6",
     "three": "^0.184.0"
