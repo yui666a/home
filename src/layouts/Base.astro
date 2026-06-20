@@ -2,10 +2,15 @@
 import '../styles/global.css';
 import 'virtual:uno.css';
 import type { Locale } from '../i18n/utils';
-interface Props { locale: Locale; title: string; description?: string; }
+interface Props {
+  locale: Locale;
+  title: string;
+  description?: string;
+}
 const { locale, title, description = '' } = Astro.props;
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang={locale}>
   <head>
     <meta charset="utf-8" />
@@ -37,7 +42,7 @@ const { locale, title, description = '' } = Astro.props;
               }
             }
           },
-          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
         );
         els.forEach((el) => io.observe(el));
       }

@@ -21,7 +21,7 @@
 
   /* type */
   --font-sans:
-    "Inter", "Noto Sans JP", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", sans-serif;
+    'Inter', 'Noto Sans JP', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
   --leading: 1.8;
 }
 

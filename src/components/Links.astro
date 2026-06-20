@@ -1,7 +1,9 @@
 ---
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
-interface Props { locale: Locale; }
+interface Props {
+  locale: Locale;
+}
 const { locale } = Astro.props;
 // TODO(未確定): 実際のURLに差し替える
 const links = [
@@ -12,13 +14,23 @@ const links = [
   { label: 'Mail', url: 'mailto:haiso666@gmail.com' },
 ];
 ---
+
 <section id="links" class="container reveal section-y">
   <h2>{t(locale, 'links_heading')}</h2>
   <ul class="list-none p-0 m-0 flex flex-wrap gap-[1.5rem]">
-    {links.map((l) => (
-      <li>
-        <a href={l.url} target="_blank" rel="noopener" class="text-[0.95rem] no-underline border-b border-line pb-[0.15rem]">{l.label}</a>
-      </li>
-    ))}
+    {
+      links.map((l) => (
+        <li>
+          <a
+            href={l.url}
+            target="_blank"
+            rel="noopener"
+            class="text-[0.95rem] no-underline border-b border-line pb-[0.15rem]"
+          >
+            {l.label}
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </section>

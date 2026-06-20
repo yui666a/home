@@ -3,6 +3,7 @@
 // 背景として控えめに。Playground(3D見せ場)の伏線も兼ねる。
 // trueになるまで描画しない軽量設計 + prefers-reduced-motion 対応。
 ---
+
 <canvas
   id="hero-bg"
   aria-hidden="true"
@@ -41,7 +42,12 @@
 
     const pGeo = new THREE.BufferGeometry();
     pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const pMat = new THREE.PointsMaterial({ color: accent, size: 0.13, transparent: true, opacity: 0.85 });
+    const pMat = new THREE.PointsMaterial({
+      color: accent,
+      size: 0.13,
+      transparent: true,
+      opacity: 0.85,
+    });
     const points = new THREE.Points(pGeo, pMat);
     scene.add(points);
 
@@ -50,12 +56,16 @@
     const maxLines = COUNT * COUNT;
     const linePositions = new Float32Array(maxLines * 3 * 2);
     lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    const lineMat = new THREE.LineBasicMaterial({ color: accent, transparent: true, opacity: 0.18 });
+    const lineMat = new THREE.LineBasicMaterial({
+      color: accent,
+      transparent: true,
+      opacity: 0.18,
+    });
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     scene.add(lines);
 
     const DIST = 4.2;
-    let pointer = { x: 0, y: 0 };
+    const pointer = { x: 0, y: 0 };
     window.addEventListener('pointermove', (e) => {
       pointer.x = (e.clientX / window.innerWidth - 0.5) * 2;
       pointer.y = (e.clientY / window.innerHeight - 0.5) * 2;
