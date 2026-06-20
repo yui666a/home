@@ -1,12 +1,12 @@
 ---
-import { m } from '../paraglide/messages.js';
+import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { works } from '../data/works';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 ---
 <section id="works" class="container reveal section-y">
-  <h2>{m.works_heading({}, { locale })}</h2>
+  <h2>{t(locale, 'works_heading')}</h2>
   <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-[1rem]">
     {works.map((w) => (
       <a
