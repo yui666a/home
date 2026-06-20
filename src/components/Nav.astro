@@ -1,18 +1,17 @@
 ---
-import { t } from '../i18n/ui';
-import type { Locale } from '../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { type Locale, locales, t } from '../i18n/ui';
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
-const otherHref = locale === 'ja' ? '/en/' : '/';
+const otherLocale: Locale = locales.find((l) => l !== locale) ?? locale;
+const homeHref = getRelativeLocaleUrl(locale, '');
+const otherHref = getRelativeLocaleUrl(otherLocale, '');
 ---
 
 <nav class="container flex justify-between items-center py-[1.5rem]">
-  <a
-    href={locale === 'ja' ? '/' : '/en/'}
-    class="font-bold tracking-[0.12em] no-underline text-[0.95rem]">AISO</a
-  >
+  <a href={homeHref} class="font-bold tracking-[0.12em] no-underline text-[0.95rem]">AISO</a>
   <div class="flex gap-[1.5rem] items-center text-[0.85rem]">
     <a href="#about" class="no-underline text-muted">{t(locale, 'nav_about')}</a>
     <a href="#skills" class="no-underline text-muted">{t(locale, 'nav_skills')}</a>
