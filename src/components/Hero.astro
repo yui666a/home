@@ -1,22 +1,33 @@
 ---
-import { m } from '../paraglide/messages.js';
+import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import HeroBackground from './HeroBackground.astro';
-interface Props { locale: Locale; }
+interface Props {
+  locale: Locale;
+}
 const { locale } = Astro.props;
-const playHref = locale === 'ja' ? '/playground/' : '/en/playground/';
+const playHref = getRelativeLocaleUrl(locale, 'playground');
 ---
+
 <div class="relative overflow-hidden">
   <HeroBackground />
-  <header class="container relative z-[1] pt-[6rem] pb-[4rem] min-h-[64vh] flex flex-col justify-center">
-    <h1 class="text-[clamp(2.6rem,8vw,4rem)] mb-[1rem] tracking-[-0.03em]">{m.hero_name({}, { locale })}</h1>
-    <p class="text-muted text-[1.05rem] font-medium tracking-[0.02em] mb-[0.75rem]">{m.hero_role({}, { locale })}</p>
-    <p class="text-[1.05rem] max-w-[34em] mb-[2.5rem]">{m.hero_tagline({}, { locale })}</p>
+  <header
+    class="container relative z-[1] pt-[6rem] pb-[4rem] min-h-[64vh] flex flex-col justify-center"
+  >
+    <h1 class="text-[clamp(2.6rem,8vw,4rem)] mb-[1rem] tracking-[-0.03em]">
+      {t(locale, 'hero_name')}
+    </h1>
+    <p class="text-muted text-[1.05rem] font-medium tracking-[0.02em] mb-[0.75rem]">
+      {t(locale, 'hero_role')}
+    </p>
+    <p class="text-[1.05rem] max-w-[34em] mb-[2.5rem]">{t(locale, 'hero_tagline')}</p>
     <a
       href={playHref}
       class="inline-flex items-center gap-[0.5rem] border border-accent text-accent px-[1.2rem] py-[0.6rem] rounded-full no-underline text-[0.95rem] font-medium w-fit backdrop-blur-[4px]"
     >
-      <span class="text-[0.8em]">▶</span> {m.nav_playground({}, { locale })}
+      <span class="text-[0.8em]">▶</span>
+      {t(locale, 'nav_playground')}
     </a>
   </header>
 </div>
