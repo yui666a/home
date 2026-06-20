@@ -1,10 +1,11 @@
 ---
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import HeroBackground from './HeroBackground.astro';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
-const playHref = locale === 'ja' ? '/playground/' : '/en/playground/';
+const playHref = getRelativeLocaleUrl(locale, 'playground');
 ---
 <div class="relative overflow-hidden">
   <HeroBackground />

@@ -1,0 +1,29 @@
+---
+import { type Locale, locales } from '../../i18n/ui';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import Skills from '../../components/Skills.astro';
+import Works from '../../components/Works.astro';
+import Links from '../../components/Links.astro';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+
+const meta = {
+  ja: { title: '相曽 結 | Portfolio', description: '相曽 結のポートフォリオ' },
+  en: { title: 'AISO, Hitoshi | Portfolio', description: 'Portfolio of AISO, Hitoshi' },
+} as const;
+---
+<Base locale={lang} title={meta[lang].title} description={meta[lang].description}>
+  <Nav locale={lang} />
+  <Hero locale={lang} />
+  <About locale={lang} />
+  <Skills locale={lang} />
+  <Works locale={lang} />
+  <Links locale={lang} />
+</Base>
