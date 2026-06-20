@@ -1,3 +1,2 @@
-// ロケール型。翻訳メッセージは Paraglide(src/paraglide/messages.js)へ移行済み。
-// ここはデータファイルやコンポーネント props で使う型だけを保持する。
-export type Locale = 'ja' | 'en';
+// ロケール型は src/i18n/ui.ts に集約。後方互換のため再エクスポートする。
+export type { Locale } from './ui';
