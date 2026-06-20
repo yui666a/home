@@ -21,7 +21,16 @@
   "overrides": [
     {
       "includes": ["**/*.astro"],
-      "formatter": { "enabled": false }
+      "formatter": { "enabled": false },
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedImports": "off",
+            "noUnusedVariables": "off"
+          }
+        }
+      },
+      "assist": { "actions": { "source": { "organizeImports": "off" } } }
     }
   ]
 }

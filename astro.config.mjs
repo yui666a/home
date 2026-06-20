@@ -1,6 +1,6 @@
-import { defineConfig } from 'astro/config';
-import UnoCSS from '@unocss/astro';
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
+import UnoCSS from '@unocss/astro';
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://yui666a.me',
