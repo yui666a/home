@@ -4,6 +4,10 @@ on:
   # master へのマージ(push)で本番デプロイ
   push:
     branches: [master]
+  # 毎日 JST 03:00 (= UTC 18:00) に定時ビルド。
+  # ビルド時に GitHub の草(contributions)を再取得して最新化するため。
+  schedule:
+    - cron: '0 18 * * *'
   # 手動実行も可能にしておく
   workflow_dispatch:
 
