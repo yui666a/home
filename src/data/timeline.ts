@@ -6,12 +6,27 @@ export type TimelineEntry = {
   detail?: LocalizedText; // 補足 (任意)
 };
 
-// TODO(未確定): 実際の職歴・活動に差し替える。下記は構造確認用の仮データ。
 export const timeline: TimelineEntry[] = [
   {
-    period: '2020 –',
+    period: '2024 –',
+    title: { ja: '株式会社BuySell Technologies', en: 'BuySell Technologies Co., Ltd.' },
+    detail: { ja: 'Software Engineer', en: 'Software Engineer' },
+  },
+  {
+    period: '2022 – 2024',
+    title: {
+      ja: '長岡技術科学大学 大学院',
+      en: 'Nagaoka University of Technology, Graduate School',
+    },
+    detail: {
+      ja: '情報・経営システム工学専攻 修士課程 修了',
+      en: "Master's, Information & Management Systems Engineering",
+    },
+  },
+  {
+    period: '2020 – 2022',
     title: { ja: '長岡技術科学大学', en: 'Nagaoka University of Technology' },
-    detail: { ja: '情報・経営システム工学', en: 'Information & Management Systems Engineering' },
+    detail: { ja: '情報・経営システム工学 学士', en: "Bachelor's, Information & Management Systems Engineering" },
   },
   {
     period: '2014 – 2020',

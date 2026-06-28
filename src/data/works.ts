@@ -9,7 +9,7 @@ export type Work = {
   thumbnail?: string; // public 配下のパス。未設定ならプレースホルダ
 };
 
-// TODO(未確定): 実際の成果物に差し替える。下記は構造確認用の仮データ。
+// 成果物は随時追加していく。
 export const works: Work[] = [
   {
     slug: 'ar-meishi',

@@ -1,16 +1,41 @@
 ---
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
+import { aboutLead, aboutPoints } from '../data/about';
+import { timeline } from '../data/timeline';
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
+const pick = (text: { ja: string; en: string }) => (locale === 'ja' ? text.ja : text.en);
 ---
 
 <section id="about" class="container reveal section-y">
   <h2>{t(locale, 'about_heading')}</h2>
-  <!-- TODO(未確定): プロフィール本文・経歴タイムラインを後で詰める -->
-  <p class="max-w-[34em] leading-[1.9]">
-    奈良工業高等専門学校 → 長岡技術科学大学 情報・経営システム工学
-  </p>
+
+  <p class="max-w-[34em] leading-[1.9] whitespace-pre-line">{pick(aboutLead)}</p>
+
+  <ul class="list-none p-0 mt-[1.5rem] mb-0 flex flex-col gap-[0.5rem] max-w-[34em]">
+    {
+      aboutPoints.map((point) => (
+        <li class="leading-[1.7] pl-[1.1rem] relative before:content-['—'] before:absolute before:left-0 before:text-muted">
+          {pick(point)}
+        </li>
+      ))
+    }
+  </ul>
+
+  <ul class="list-none p-0 mt-[2.5rem] mb-0 flex flex-col gap-[1rem]">
+    {
+      timeline.map((entry) => (
+        <li class="flex gap-[1.25rem] text-[0.95rem] leading-[1.6]">
+          <span class="shrink-0 w-[6.5rem] text-muted tabular-nums">{entry.period}</span>
+          <span>
+            <span class="font-medium">{pick(entry.title)}</span>
+            {entry.detail && <span class="block text-muted text-[0.85rem]">{pick(entry.detail)}</span>}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
 </section>

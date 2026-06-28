@@ -1,7 +1,7 @@
 ---
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
-import { skills } from '../data/skills';
+import { skills, skillLevelLabel } from '../data/skills';
 interface Props {
   locale: Locale;
 }
@@ -23,6 +23,9 @@ const { locale } = Astro.props;
                 <img src={item.logo} alt={item.name} width="22" height="22" class="inline" />
               )}
               <span>{item.name}</span>
+              <span class="text-[0.7rem] text-muted border border-line rounded-full px-[0.5rem] py-[0.05rem]">
+                {locale === 'ja' ? skillLevelLabel[item.level].ja : skillLevelLabel[item.level].en}
+              </span>
             </li>
           ))}
         </ul>
