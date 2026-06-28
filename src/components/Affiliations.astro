@@ -1,0 +1,38 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../i18n/utils';
+import { affiliations } from '../data/affiliations';
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+
+<section id="affiliations" class="container reveal section-y">
+  <h2>{t(locale, 'affiliations_heading')}</h2>
+  <ul class="list-none p-0 m-0 flex flex-wrap gap-[1.5rem] items-stretch">
+    {
+      affiliations.map((a) => {
+        const name = locale === 'ja' ? a.name.ja : a.name.en;
+        return (
+          <li>
+            <a
+              href={a.url}
+              target="_blank"
+              rel="noopener"
+              title={name}
+              class="no-underline flex items-center justify-center w-[240px] h-[100px] px-[1.75rem] border border-line rounded-[12px] bg-white transition-[border-color] duration-150"
+            >
+              <img
+                src={a.logo}
+                alt={name}
+                class="h-[40px] max-w-full w-auto object-contain block"
+                loading="lazy"
+              />
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>
