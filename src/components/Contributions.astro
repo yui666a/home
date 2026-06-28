@@ -1,0 +1,60 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../i18n/utils';
+import { fetchContributions, type ContributionDay } from '../data/contributions';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const { total, days } = await fetchContributions();
+
+// 日別データを週(列)単位に並べ替える。各列は日曜始まりの7マス。
+// 先頭の曜日ぶんは空セルで埋めて曜日の行を揃える。
+const weeks: (ContributionDay | null)[][] = [];
+if (days.length > 0) {
+  const firstWeekday = new Date(days[0].date).getDay(); // 0=Sun
+  let current: (ContributionDay | null)[] = Array(firstWeekday).fill(null);
+  for (const day of days) {
+    current.push(day);
+    if (current.length === 7) {
+      weeks.push(current);
+      current = [];
+    }
+  }
+  if (current.length > 0) {
+    while (current.length < 7) current.push(null);
+    weeks.push(current);
+  }
+}
+
+// GitHub 純正の緑4段階(ライト)。level 0 は空セル色。
+const levelColors = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
+
+const caption = t(locale, 'contributions_caption').replace('{count}', String(total));
+---
+
+{
+  days.length > 0 && (
+    <section id="contributions" class="container reveal section-y">
+      <h2>{t(locale, 'contributions_heading')}</h2>
+      <p class="text-[0.9rem] text-muted mb-[1.25rem]">{caption}</p>
+      <div class="overflow-x-auto pb-[0.5rem]">
+        <div class="flex gap-[3px] min-w-max">
+          {weeks.map((week) => (
+            <div class="flex flex-col gap-[3px]">
+              {week.map((day) => (
+                <span
+                  class="block w-[11px] h-[11px] rounded-[2px]"
+                  style={`background:${day ? levelColors[day.level] : 'transparent'}`}
+                  title={day ? `${day.date}: ${day.count}` : undefined}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

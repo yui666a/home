@@ -5,11 +5,11 @@ export default defineConfig({
   presets: [presetWind4()],
   theme: {
     colors: {
-      bg: '#fbfbf9',
+      bg: '#fbfaf7',
       fg: '#1a1a1a',
       muted: '#6b6b6b',
-      line: '#e6e5e0',
-      accent: '#2f6df0',
+      line: '#e6e4dd',
+      accent: '#3a8d7f',
     },
     // フォントファミリーは global.css の --font-sans が正本(body に適用)。
     // presetWind4 の theme.font とは重複するため、ここでは定義しない。

@@ -6,6 +6,7 @@ import Hero from '../../components/Hero.astro';
 import About from '../../components/About.astro';
 import Skills from '../../components/Skills.astro';
 import Works from '../../components/Works.astro';
+import Contributions from '../../components/Contributions.astro';
 import Links from '../../components/Links.astro';
 
 export function getStaticPaths() {
@@ -26,5 +27,6 @@ const meta = {
   <About locale={lang} />
   <Skills locale={lang} />
   <Works locale={lang} />
+  <Contributions locale={lang} />
   <Links locale={lang} />
 </Base>
