@@ -21,6 +21,7 @@ export const ui = {
     links_heading: 'Links',
     contributions_heading: 'Contributions',
     contributions_caption: '直近1年で {count} contributions',
+    playground_back: '← 戻る',
     lang_switch_to: 'EN',
   },
   en: {
@@ -38,6 +39,7 @@ export const ui = {
     links_heading: 'Links',
     contributions_heading: 'Contributions',
     contributions_caption: '{count} contributions in the last year',
+    playground_back: '← Back',
     lang_switch_to: 'JP',
   },
 } as const;
