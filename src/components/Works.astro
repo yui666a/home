@@ -6,6 +6,8 @@ interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
+const viewSiteLabel = t(locale, 'works_view_site');
+const closeLabel = t(locale, 'works_close');
 ---
 
 <section id="works" class="container reveal section-y">
@@ -15,21 +17,18 @@ const { locale } = Astro.props;
       works.map((w) => {
         const title = locale === 'ja' ? w.title.ja : w.title.en;
         const summary = locale === 'ja' ? w.summary.ja : w.summary.en;
-        const Card = w.url ? 'a' : 'div';
-        const linkProps = w.url
-          ? { href: w.url, target: '_blank', rel: 'noopener' }
-          : {};
+        const description = locale === 'ja' ? w.description.ja : w.description.en;
         return (
-          <Card
-            {...linkProps}
-            class="border border-line rounded-[12px] p-[1.5rem] no-underline block bg-white transition-[border-color] duration-150"
+          <button
+            type="button"
+            class="work-card text-left border border-line rounded-[12px] p-[1.5rem] no-underline block bg-white transition-[border-color] duration-150 cursor-pointer w-full"
+            data-title={title}
+            data-description={description}
+            data-thumbnail={w.thumbnail ?? ''}
+            data-url={w.url ?? ''}
           >
-            <h3 class="mt-0 mb-[0.75rem] text-[1.05rem] tracking-[-0.01em]">
-              {title}
-            </h3>
-            <p class="text-muted mt-0 mb-[1rem] text-[0.9rem] leading-[1.6]">
-              {summary}
-            </p>
+            <h3 class="mt-0 mb-[0.75rem] text-[1.05rem] tracking-[-0.01em]">{title}</h3>
+            <p class="text-muted mt-0 mb-[1rem] text-[0.9rem] leading-[1.6]">{summary}</p>
             <div class="flex flex-wrap gap-[0.4rem]">
               {w.tags.map((tag) => (
                 <span class="text-[0.72rem] text-muted border border-line px-[0.55rem] py-[0.15rem] rounded-full">
@@ -37,9 +36,130 @@ const { locale } = Astro.props;
                 </span>
               ))}
             </div>
-          </Card>
+          </button>
         );
       })
     }
   </div>
+
+  <div
+    id="work-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-[1rem]"
+    aria-hidden="true"
+  >
+    <div id="work-modal-overlay" class="absolute inset-0 bg-black/50"></div>
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="work-modal-title"
+      class="relative z-10 w-full max-w-[640px] max-h-[85vh] overflow-y-auto rounded-[16px] bg-white shadow-xl"
+    >
+      <button
+        type="button"
+        id="work-modal-close"
+        aria-label={closeLabel}
+        class="absolute top-[0.75rem] right-[0.75rem] z-20 grid h-[32px] w-[32px] place-items-center rounded-full bg-white/80 text-[1.2rem] leading-none text-muted hover:text-fg cursor-pointer"
+      >
+        ×
+      </button>
+      <img
+        id="work-modal-image"
+        src=""
+        alt=""
+        class="hidden w-full rounded-t-[16px] object-cover"
+      />
+      <div class="p-[1.75rem]">
+        <h3 id="work-modal-title" class="mt-0 mb-[1rem] text-[1.25rem] tracking-[-0.01em]"></h3>
+        <p
+          id="work-modal-description"
+          class="text-muted mt-0 mb-[1.5rem] text-[0.95rem] leading-[1.8]"
+        >
+        </p>
+        <a
+          id="work-modal-link"
+          href="#"
+          target="_blank"
+          rel="noopener"
+          class="hidden no-underline text-[0.9rem] font-medium text-accent border border-accent rounded-full px-[1.1rem] py-[0.45rem] hover:bg-accent hover:text-white transition-colors"
+        >
+          {viewSiteLabel} ↗
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  const modal = document.getElementById('work-modal');
+  const overlay = document.getElementById('work-modal-overlay');
+  const closeBtn = document.getElementById('work-modal-close');
+  const imageEl = document.getElementById('work-modal-image') as HTMLImageElement | null;
+  const titleEl = document.getElementById('work-modal-title');
+  const descEl = document.getElementById('work-modal-description');
+  const linkEl = document.getElementById('work-modal-link') as HTMLAnchorElement | null;
+
+  let lastFocused: HTMLElement | null = null;
+
+  // 親 section の .reveal が will-change:transform を持ち containing block を
+  // 生成するため、fixed がビューポート基準にならない。body 直下へ移して回避する。
+  if (modal && modal.parentElement !== document.body) {
+    document.body.appendChild(modal);
+  }
+
+  function openModal(card: HTMLElement) {
+    if (!modal || !titleEl || !descEl || !imageEl || !linkEl) return;
+    const title = card.dataset.title ?? '';
+    const description = card.dataset.description ?? '';
+    const thumbnail = card.dataset.thumbnail ?? '';
+    const url = card.dataset.url ?? '';
+
+    titleEl.textContent = title;
+    descEl.textContent = description;
+
+    if (thumbnail) {
+      imageEl.src = thumbnail;
+      imageEl.alt = title;
+      imageEl.classList.remove('hidden');
+    } else {
+      imageEl.src = '';
+      imageEl.alt = '';
+      imageEl.classList.add('hidden');
+    }
+
+    if (url) {
+      linkEl.href = url;
+      linkEl.classList.remove('hidden');
+    } else {
+      linkEl.removeAttribute('href');
+      linkEl.classList.add('hidden');
+    }
+
+    lastFocused = document.activeElement as HTMLElement;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeBtn?.focus();
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lastFocused?.focus();
+  }
+
+  document.querySelectorAll<HTMLElement>('.work-card').forEach((card) => {
+    card.addEventListener('click', () => openModal(card));
+  });
+
+  overlay?.addEventListener('click', closeModal);
+  closeBtn?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+</script>
