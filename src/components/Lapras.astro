@@ -1,0 +1,96 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../i18n/utils';
+import { fetchLaprasScores } from '../data/lapras';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const scores = await fetchLaprasScores();
+
+const SHARE_URL = 'https://lapras.com/public/YXVLCA2';
+const MAX = 5;
+
+const rows = scores
+  ? [
+      { label: t(locale, 'lapras_engineering'), value: scores.engineering },
+      { label: t(locale, 'lapras_business'), value: scores.business },
+      { label: t(locale, 'lapras_influence'), value: scores.influence },
+    ]
+  : [];
+---
+
+{
+  scores && (
+    <section id="lapras" class="container reveal section-y">
+      <h2>{t(locale, 'lapras_heading')}</h2>
+      <div class="lapras-card rounded-[16px] border border-line p-[1.75rem] sm:p-[2rem]">
+        <div class="flex flex-col gap-[1.5rem]">
+          {rows.map((row) => {
+            const pct = Math.min(100, Math.max(0, (row.value / MAX) * 100));
+            return (
+              <div>
+                <div class="flex items-baseline justify-between mb-[0.5rem]">
+                  <span class="text-[0.9rem] font-medium tracking-[0.02em]">{row.label}</span>
+                  <span class="text-[0.95rem] tabular-nums">
+                    <span class="font-semibold text-[1.15rem] text-accent">
+                      {row.value.toFixed(2)}
+                    </span>
+                    <span class="text-muted text-[0.8rem]"> / {MAX.toFixed(2)}</span>
+                  </span>
+                </div>
+                <div class="lapras-track h-[8px] w-full rounded-full overflow-hidden">
+                  <div class="lapras-bar h-full rounded-full" style={`--target:${pct}%`} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <a
+          href={SHARE_URL}
+          target="_blank"
+          rel="noopener"
+          class="lapras-link mt-[1.75rem] inline-block text-[0.85rem] text-muted no-underline hover:text-accent transition-colors"
+        >
+          {t(locale, 'lapras_source')} ↗
+        </a>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .lapras-card {
+    background:
+      radial-gradient(
+        120% 120% at 0% 0%,
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        transparent 60%
+      ),
+      #ffffff;
+  }
+  .lapras-track {
+    background: color-mix(in srgb, var(--accent) 12%, #eceae3);
+  }
+  .lapras-bar {
+    width: 0;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--accent) 70%, #ffffff),
+      var(--accent)
+    );
+    transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* セクションが画面に入ったらバーを伸ばす(reveal と連動) */
+  :global(.reveal.is-visible) .lapras-bar {
+    width: var(--target);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lapras-bar {
+      width: var(--target);
+      transition: none;
+    }
+  }
+</style>
