@@ -33,28 +33,114 @@ if (days.length > 0) {
 const levelColors = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
 
 const caption = t(locale, 'contributions_caption').replace('{count}', String(total));
+
+// ツールチップ文言テンプレートを data 属性でクライアントへ渡す({date}/{count} を JS で置換)
+const tipTemplate = t(locale, 'contributions_tip');
+const tipZeroTemplate = t(locale, 'contributions_tip_zero');
 ---
 
 {
   days.length > 0 && (
-    <section id="contributions" class="container reveal section-y">
+    <section id="contributions" class="container reveal section-y relative">
       <h2>{t(locale, 'contributions_heading')}</h2>
       <p class="text-[0.9rem] text-muted mb-[1.25rem]">{caption}</p>
-      <div class="overflow-x-auto pb-[0.5rem]">
+      <div
+        class="contrib overflow-x-auto pb-[0.5rem]"
+        data-locale={locale}
+        data-tip={tipTemplate}
+        data-tip-zero={tipZeroTemplate}
+      >
         <div class="flex gap-[3px] min-w-max">
           {weeks.map((week) => (
             <div class="flex flex-col gap-[3px]">
-              {week.map((day) => (
-                <span
-                  class="block w-[11px] h-[11px] rounded-[2px]"
-                  style={`background:${day ? levelColors[day.level] : 'transparent'}`}
-                  title={day ? `${day.date}: ${day.count}` : undefined}
-                />
-              ))}
+              {week.map((day) =>
+                day ? (
+                  <span
+                    class="contrib-cell block w-[11px] h-[11px] rounded-[2px]"
+                    style={`background:${levelColors[day.level]}`}
+                    data-date={day.date}
+                    data-count={day.count}
+                    tabindex="0"
+                  />
+                ) : (
+                  <span class="block w-[11px] h-[11px] rounded-[2px] bg-transparent" />
+                ),
+              )}
             </div>
           ))}
         </div>
       </div>
+      {/* ツールチップは overflow でクリップされないよう section 直下に置く */}
+      <div
+        class="contrib-tip pointer-events-none absolute z-20 hidden whitespace-nowrap rounded-[6px] bg-fg px-[0.6rem] py-[0.3rem] text-[0.72rem] text-white shadow-md"
+        role="tooltip"
+      />
     </section>
   )
 }
+
+<script>
+  document.querySelectorAll<HTMLElement>('#contributions').forEach((section) => {
+    const root = section.querySelector<HTMLElement>('.contrib');
+    const tip = section.querySelector<HTMLElement>('.contrib-tip');
+    if (!root || !tip) return;
+    const locale = root.dataset.locale === 'en' ? 'en-US' : 'ja-JP';
+    const tipTmpl = root.dataset.tip ?? '{count} ({date})';
+    const tipZeroTmpl = root.dataset.tipZero ?? '0 ({date})';
+
+    const fmt = new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+
+    const GAP = 6; // セルとツールチップの隙間
+
+    function showTip(cell: HTMLElement) {
+      const iso = cell.dataset.date;
+      const count = Number(cell.dataset.count ?? '0');
+      if (!iso) return;
+      // YYYY-MM-DD をローカルタイムの正午で解釈し、TZ ずれで日付が前後しないようにする
+      const dateLabel = fmt.format(new Date(`${iso}T12:00:00`));
+      const tmpl = count === 0 ? tipZeroTmpl : tipTmpl;
+      tip!.textContent = tmpl.replace('{date}', dateLabel).replace('{count}', String(count));
+      tip!.classList.remove('hidden');
+
+      // ツールチップは section 直下(overflow の外)。section 基準で配置する。
+      const secRect = section.getBoundingClientRect();
+      const cellRect = cell.getBoundingClientRect();
+      const tipRect = tip!.getBoundingClientRect();
+
+      // 横: セル中央に揃えつつ section 内に収める
+      let left = cellRect.left - secRect.left + cellRect.width / 2 - tipRect.width / 2;
+      left = Math.max(0, Math.min(left, secRect.width - tipRect.width));
+
+      // 縦: 基本はセルの上。上に収まらなければセルの下へフリップ
+      let top = cellRect.top - secRect.top - tipRect.height - GAP;
+      if (top < 0) {
+        top = cellRect.bottom - secRect.top + GAP;
+      }
+
+      tip!.style.left = `${left}px`;
+      tip!.style.top = `${top}px`;
+    }
+
+    function hideTip() {
+      tip!.classList.add('hidden');
+    }
+
+    root.querySelectorAll<HTMLElement>('.contrib-cell').forEach((cell) => {
+      cell.addEventListener('mouseenter', () => showTip(cell));
+      cell.addEventListener('focus', () => showTip(cell));
+      cell.addEventListener('mouseleave', hideTip);
+      cell.addEventListener('blur', hideTip);
+      // スマホ: タップで表示(同じセルをもう一度タップ or 別所タップで消える)
+      cell.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (tip!.classList.contains('hidden')) showTip(cell);
+        else hideTip();
+      });
+    });
+    document.addEventListener('click', hideTip);
+  });
+</script>
