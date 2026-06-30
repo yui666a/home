@@ -2,21 +2,21 @@ import type { LocalizedText } from './works';
 
 // About セクションのリード文と箇条書き。
 export const aboutLead: LocalizedText = {
-  ja: 'ソフトウェアエンジニア。\nフロントもバックも、必要ならコードの外も。',
-  en: 'Software engineer.\nFrontend, backend — and beyond the code when it helps.',
+  ja: 'ソフトウェアエンジニア。',
+  en: 'Software engineer.',
 };
 
 export const aboutPoints: LocalizedText[] = [
   {
-    ja: 'FE / BE / DB / インフラまで、領域を分けずに手を動かす',
-    en: 'Hands-on across FE / BE / DB / infra, without drawing lines',
+    ja: '役割の線を引かず、必要なところに手を伸ばす',
+    en: "I don't draw lines around roles; I reach for wherever I'm needed",
   },
   {
-    ja: '困りごとは現場まで行って、原因から解く',
-    en: 'I go to where the problem is and solve it from the root',
+    ja: '人と知見をつないで、まわりごと前に進める',
+    en: 'Connecting people and what they know, to move things forward together',
   },
   {
     ja: 'つくるのが好き',
-    en: 'I just like building things',
+    en: 'I like building things',
   },
 ];

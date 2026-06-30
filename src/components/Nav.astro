@@ -6,12 +6,10 @@ interface Props {
 }
 const { locale } = Astro.props;
 const otherLocale: Locale = locales.find((l) => l !== locale) ?? locale;
-const homeHref = getRelativeLocaleUrl(locale, '');
 const otherHref = getRelativeLocaleUrl(otherLocale, '');
 ---
 
-<nav class="container flex justify-between items-center py-[1.5rem]">
-  <a href={homeHref} class="font-bold tracking-[0.12em] no-underline text-[0.95rem]">AISO</a>
+<nav class="container flex justify-end items-center py-[1.5rem]">
   <div class="flex gap-[1.5rem] items-center text-[0.85rem]">
     <a href="#about" class="no-underline text-muted">{t(locale, 'nav_about')}</a>
     <a href="#skills" class="no-underline text-muted">{t(locale, 'nav_skills')}</a>
