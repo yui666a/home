@@ -25,6 +25,7 @@
   "homepage": "https://github.com/yui666a/home#readme",
   "dependencies": {
     "astro": "^6.4.6",
+    "mind-ar": "^1.2.5",
     "three": "^0.184.0"
   },
   "devDependencies": {
