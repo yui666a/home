@@ -7,7 +7,14 @@
   --accent: #3a8d7f; /* 差し色: くすみティール(クール×温かい。草の緑と調和) */
 
   /* layout */
-  --maxw: 720px; /* 1カラム読みやすい幅 */
+  --maxw: 720px; /* 1カラム読みやすい幅(本文) */
+  --maxw-wide: 1040px; /* 一覧・グリッド系の広い幅 */
+
+  /* radius scale */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
   --pad: clamp(1.25rem, 5vw, 2rem);
 
   /* spacing scale (8px ベース) */
