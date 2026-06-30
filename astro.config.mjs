@@ -25,6 +25,12 @@ export default defineConfig({
   integrations: [UnoCSS({ injectReset: false })],
   vite: {
     plugins: [mindarThreeShim()],
+    // dev の依存事前バンドル (esbuild) は Vite プラグインの resolveId を経由せず
+    // mind-ar 内の sRGBEncoding import を解決できないため、事前バンドル対象から除外する。
+    // 除外すると dev でも resolveId プラグイン経由で shim に解決される。
+    optimizeDeps: {
+      exclude: ['mind-ar', 'three'],
+    },
   },
   i18n: {
     defaultLocale: 'ja',

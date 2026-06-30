@@ -8,6 +8,7 @@ const { locale } = Astro.props;
 const otherLocale: Locale = locales.find((l) => l !== locale) ?? locale;
 const homeHref = getRelativeLocaleUrl(locale, '');
 const otherHref = getRelativeLocaleUrl(otherLocale, '');
+const arHref = getRelativeLocaleUrl(locale, 'ar');
 ---
 
 <nav class="container flex justify-between items-center py-[1.5rem]">
@@ -17,6 +18,7 @@ const otherHref = getRelativeLocaleUrl(otherLocale, '');
     <a href="#skills" class="no-underline text-muted">{t(locale, 'nav_skills')}</a>
     <a href="#works" class="no-underline text-muted">{t(locale, 'nav_works')}</a>
     <a href="#links" class="no-underline text-muted">{t(locale, 'nav_links')}</a>
+    <a href={arHref} class="no-underline text-muted">{t(locale, 'ar_title')}</a>
     <a
       href={otherHref}
       class="border border-line px-[0.7rem] py-[0.25rem] rounded-full no-underline text-[0.8rem] tracking-[0.05em]"
