@@ -28,7 +28,7 @@ const rows = scores
   scores && (
     <section id="lapras" class="container reveal section-y">
       <SectionHeading num={sectionNo.lapras} label={t(locale, 'lapras_heading')} />
-      <div class="lapras-card rounded-[16px] border border-line p-[1.75rem] sm:p-[2rem]">
+      <div class="lapras-card rounded-[20px] border border-line p-[1.75rem] sm:p-[2rem]">
         <div class="flex flex-col gap-[1.5rem]">
           {rows.map((row) => {
             const pct = Math.min(100, Math.max(0, (row.value / MAX) * 100));
@@ -65,13 +65,7 @@ const rows = scores
 
 <style>
   .lapras-card {
-    background:
-      radial-gradient(
-        120% 120% at 0% 0%,
-        color-mix(in srgb, var(--accent) 10%, transparent),
-        transparent 60%
-      ),
-      #ffffff;
+    background: #ffffff;
   }
   .lapras-track {
     background: color-mix(in srgb, var(--accent) 12%, #eceae3);
