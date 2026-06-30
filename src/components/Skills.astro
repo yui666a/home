@@ -10,7 +10,7 @@ interface Props {
 const { locale } = Astro.props;
 ---
 
-<section id="skills" class="container reveal section-y">
+<section id="skills" class="container-wide reveal section-y">
   <SectionHeading num={sectionNo.skills} label={t(locale, 'skills_heading')} />
   {
     skills.map((cat) => (
