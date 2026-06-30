@@ -2,6 +2,8 @@
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { works } from '../data/works';
+import SectionHeading from './SectionHeading.astro';
+import { sectionNo } from '../data/sections';
 interface Props {
   locale: Locale;
 }
@@ -11,7 +13,7 @@ const closeLabel = t(locale, 'works_close');
 ---
 
 <section id="works" class="container reveal section-y">
-  <h2>{t(locale, 'works_heading')}</h2>
+  <SectionHeading num={sectionNo.works} label={t(locale, 'works_heading')} />
   <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-[1rem]">
     {
       works.map((w) => {

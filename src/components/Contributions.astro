@@ -2,6 +2,8 @@
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { fetchContributions, type ContributionDay } from '../data/contributions';
+import SectionHeading from './SectionHeading.astro';
+import { sectionNo } from '../data/sections';
 
 interface Props {
   locale: Locale;
@@ -42,7 +44,7 @@ const tipZeroTemplate = t(locale, 'contributions_tip_zero');
 {
   days.length > 0 && (
     <section id="contributions" class="container reveal section-y relative">
-      <h2>{t(locale, 'contributions_heading')}</h2>
+      <SectionHeading num={sectionNo.contributions} label={t(locale, 'contributions_heading')} />
       <p class="text-[0.9rem] text-muted mb-[1.25rem]">{caption}</p>
       <div
         class="contrib overflow-x-auto pb-[0.5rem]"

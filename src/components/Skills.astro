@@ -2,6 +2,8 @@
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { skills, skillLevelLabel } from '../data/skills';
+import SectionHeading from './SectionHeading.astro';
+import { sectionNo } from '../data/sections';
 interface Props {
   locale: Locale;
 }
@@ -9,7 +11,7 @@ const { locale } = Astro.props;
 ---
 
 <section id="skills" class="container reveal section-y">
-  <h2>{t(locale, 'skills_heading')}</h2>
+  <SectionHeading num={sectionNo.skills} label={t(locale, 'skills_heading')} />
   {
     skills.map((cat) => (
       <div class="mb-[2.5rem]">

@@ -2,6 +2,8 @@
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { affiliations } from '../data/affiliations';
+import SectionHeading from './SectionHeading.astro';
+import { sectionNo } from '../data/sections';
 interface Props {
   locale: Locale;
 }
@@ -9,7 +11,7 @@ const { locale } = Astro.props;
 ---
 
 <section id="affiliations" class="container reveal section-y">
-  <h2>{t(locale, 'affiliations_heading')}</h2>
+  <SectionHeading num={sectionNo.affiliations} label={t(locale, 'affiliations_heading')} />
   <ul class="list-none p-0 m-0 flex flex-wrap gap-[1.5rem] items-stretch">
     {
       affiliations.map((a) => {
