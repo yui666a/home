@@ -14,7 +14,7 @@ const closeLabel = t(locale, 'works_close');
 
 <section id="works" class="container-wide reveal section-y">
   <SectionHeading num={sectionNo.works} label={t(locale, 'works_heading')} />
-  <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-[1rem]">
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] auto-rows-fr gap-[1rem]">
     {
       works.map((w) => {
         const title = locale === 'ja' ? w.title.ja : w.title.en;
@@ -23,7 +23,7 @@ const closeLabel = t(locale, 'works_close');
         return (
           <button
             type="button"
-            class="work-card text-left border border-line rounded-[12px] p-[1.5rem] no-underline block bg-white transition-[border-color] duration-150 cursor-pointer w-full"
+            class={`work-card text-left border border-line rounded-[14px] p-[1.5rem] no-underline block bg-white transition-[border-color] duration-150 cursor-pointer w-full${w.featured ? ' sm:col-span-2' : ''}`}
             data-title={title}
             data-description={description}
             data-thumbnail={w.thumbnail ?? ''}

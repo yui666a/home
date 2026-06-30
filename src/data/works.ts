@@ -8,6 +8,7 @@ export type Work = {
   tags: string[];
   url?: string; // 公開URL。あればモーダル内に「サイトを見る」リンクを表示
   thumbnail?: string; // public 配下のパス。未設定ならプレースホルダ
+  featured?: boolean; // true ならグリッドで大きく見せる看板作品
 };
 
 // 成果物は随時追加していく。
@@ -26,6 +27,7 @@ export const works: Work[] = [
     tags: ['Web', 'Audio', 'TypeScript'],
     url: 'https://bpm-detector.yui666a.me/',
     thumbnail: '/img/works/bpm-detector.png',
+    featured: true,
   },
   {
     slug: 'ar-meishi',
