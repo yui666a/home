@@ -3,6 +3,8 @@ import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { aboutLead, aboutPoints } from '../data/about';
 import { timeline } from '../data/timeline';
+import SectionHeading from './SectionHeading.astro';
+import { sectionNo } from '../data/sections';
 interface Props {
   locale: Locale;
 }
@@ -11,7 +13,7 @@ const pick = (text: { ja: string; en: string }) => (locale === 'ja' ? text.ja : 
 ---
 
 <section id="about" class="container reveal section-y">
-  <h2>{t(locale, 'about_heading')}</h2>
+  <SectionHeading num={sectionNo.about} label={t(locale, 'about_heading')} />
 
   <p class="max-w-[34em] leading-[1.9] whitespace-pre-line">{pick(aboutLead)}</p>
 

@@ -11,7 +11,10 @@ describe('works data', () => {
       expect(w.title.ja).toBeTruthy();
       expect(w.title.en).toBeTruthy();
       expect(Array.isArray(w.tags)).toBe(true);
-      expect(w.url).toMatch(/^https?:\/\//);
+      // url は任意フィールド。設定されている場合のみ形式を検証する。
+      if (w.url !== undefined) {
+        expect(w.url).toMatch(/^https?:\/\//);
+      }
     }
   });
   it('slug は一意', () => {

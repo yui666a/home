@@ -2,7 +2,6 @@
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import HeroBackground from './HeroBackground.astro';
 interface Props {
   locale: Locale;
 }
@@ -11,11 +10,10 @@ const playHref = getRelativeLocaleUrl(locale, 'playground');
 ---
 
 <div class="relative overflow-hidden">
-  <HeroBackground />
   <header
-    class="container relative z-[1] pt-[6rem] pb-[4rem] min-h-[64vh] flex flex-col justify-center"
+    class="container relative z-[1] pt-[6rem] pb-[4rem] min-h-[72vh] flex flex-col justify-center"
   >
-    <h1 class="text-[clamp(2.6rem,8vw,4rem)] mb-[1rem] tracking-[-0.03em]">
+    <h1 class="text-[clamp(3rem,12vw,6rem)] mb-[1rem] tracking-[-0.04em]">
       {t(locale, 'hero_name')}
     </h1>
     <p class="text-muted text-[1.05rem] font-medium tracking-[0.02em] mb-[0.75rem]">
@@ -24,10 +22,9 @@ const playHref = getRelativeLocaleUrl(locale, 'playground');
     <p class="text-[1.05rem] max-w-[34em] mb-[2.5rem]">{t(locale, 'hero_tagline')}</p>
     <a
       href={playHref}
-      class="inline-flex items-center gap-[0.5rem] border border-accent text-accent px-[1.2rem] py-[0.6rem] rounded-full no-underline text-[0.95rem] font-medium w-fit backdrop-blur-[4px]"
+      class="inline-flex items-center gap-[0.5rem] border border-accent text-accent px-[1.2rem] py-[0.6rem] rounded-full no-underline text-[0.95rem] font-medium w-fit"
     >
-      <span class="text-[0.8em]">▶</span>
-      {t(locale, 'nav_playground')}
+      {t(locale, 'nav_playground')} <span aria-hidden="true">→</span>
     </a>
   </header>
 </div>

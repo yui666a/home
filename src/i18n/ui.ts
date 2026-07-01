@@ -50,6 +50,7 @@ export const ui = {
     works_heading: 'Works',
     works_view_site: 'View site',
     works_close: 'Close',
+    affiliations_heading: 'Affiliations',
     links_heading: 'Links',
     contributions_heading: 'Contributions',
     contributions_caption: '{count} contributions in the last year',
