@@ -8,10 +8,12 @@ interface Props {
 }
 const { locale } = Astro.props;
 const links = [
-  { label: 'GitHub', url: 'https://github.com/yui666a' },
-  { label: 'Qiita', url: 'https://qiita.com/yui666a' },
-  { label: 'Zenn', url: 'https://zenn.dev/yui666a' },
-  { label: 'X', url: 'https://x.com/yui_ai0216' },
+  { label: 'GitHub', url: 'https://github.com/yui666a', logo: '/img/logo/github.svg' },
+  { label: 'Qiita', url: 'https://qiita.com/yui666a', logo: '/img/logo/qiita.svg' },
+  { label: 'Zenn', url: 'https://zenn.dev/yui666a', logo: '/img/logo/zenn.svg' },
+  { label: 'X', url: 'https://x.com/yui_ai0216', logo: '/img/logo/x.svg' },
+  { label: 'Instagram', url: 'https://www.instagram.com/yui.ai/', logo: '/img/logo/instagram.svg' },
+  { label: 'Facebook', url: 'https://facebook.com/hitoshi.aiso', logo: '/img/logo/facebook.svg' },
 ];
 ---
 
@@ -25,8 +27,9 @@ const links = [
             href={l.url}
             target="_blank"
             rel="noopener"
-            class="text-[0.95rem] no-underline border-b border-line pb-[0.15rem]"
+            class="inline-flex items-center gap-[0.4rem] text-[0.95rem] no-underline border-b border-line pb-[0.15rem]"
           >
+            <img src={l.logo} alt="" width="18" height="18" class="inline" />
             {l.label}
           </a>
         </li>
