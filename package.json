@@ -25,6 +25,7 @@
   "homepage": "https://github.com/yui666a/home#readme",
   "dependencies": {
     "astro": "^6.4.6",
+    "mind-ar": "^1.2.5",
     "three": "^0.184.0"
   },
   "devDependencies": {
@@ -34,6 +35,7 @@
     "@unocss/preset-wind4": "^66.7.2",
     "eslint": "^9.18.0",
     "eslint-plugin-astro": "^1.3.1",
+    "jsdom": "^29.1.1",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3",

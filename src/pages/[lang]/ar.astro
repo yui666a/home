@@ -1,0 +1,83 @@
+---
+import { type Locale, locales, t } from '../../i18n/ui';
+import Base from '../../layouts/Base.astro';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const targetSrc = `${import.meta.env.BASE_URL}ar/business-card.mind`.replace(/([^:])\/{2,}/g, '$1/');
+---
+
+<Base locale={lang} title={t(lang, 'ar_title')}>
+  <div
+    id="ar-root"
+    class="fixed inset-0 bg-black"
+    data-target-src={targetSrc}
+    data-msg-denied={t(lang, 'ar_camera_denied')}
+    data-msg-unsupported={t(lang, 'ar_unsupported')}
+  >
+    <div id="ar-container" class="absolute inset-0"></div>
+
+    <div id="ar-loading" class="absolute inset-0 flex items-center justify-center text-center text-white p-6">
+      <p>{t(lang, 'ar_loading')}<br />{t(lang, 'ar_scan_hint')}</p>
+    </div>
+
+    <div id="ar-error" class="absolute inset-0 hidden items-center justify-center text-center text-white p-6">
+      <p id="ar-error-msg"></p>
+    </div>
+
+    <button
+      id="ar-motion"
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden rounded bg-white/90 px-4 py-2 text-black"
+    >
+      {t(lang, 'ar_motion_permission')}
+    </button>
+  </div>
+</Base>
+
+<script>
+  import { startArBusinessCard } from '../../scripts/ar-business-card';
+
+  const root = document.getElementById('ar-root');
+  const container = document.getElementById('ar-container');
+  const loading = document.getElementById('ar-loading');
+  const errorBox = document.getElementById('ar-error');
+  const errorMsg = document.getElementById('ar-error-msg');
+  const motionBtn = document.getElementById('ar-motion');
+
+  const targetSrc = root?.dataset.targetSrc ?? '';
+  const msgDenied = root?.dataset.msgDenied ?? '';
+  const msgUnsupported = root?.dataset.msgUnsupported ?? '';
+
+  function showError(text: string) {
+    if (loading) loading.classList.add('hidden');
+    if (errorMsg) errorMsg.textContent = text;
+    if (errorBox) {
+      errorBox.classList.remove('hidden');
+      errorBox.classList.add('flex');
+    }
+  }
+
+  // iOS のモーション許可が要る場合のみボタンを出す
+  const DOE = window.DeviceOrientationEvent as
+    | (typeof window.DeviceOrientationEvent & { requestPermission?: () => Promise<string> })
+    | undefined;
+  if (DOE && typeof DOE.requestPermission === 'function' && motionBtn) {
+    motionBtn.classList.remove('hidden');
+    motionBtn.addEventListener('click', () => {
+      DOE.requestPermission?.().catch(() => {});
+      motionBtn.classList.add('hidden');
+    });
+  }
+
+  if (container) {
+    startArBusinessCard({
+      container,
+      targetSrc,
+      onReady: () => loading && loading.classList.add('hidden'),
+      onError: (kind) => showError(kind === 'denied' ? msgDenied : msgUnsupported),
+    }).catch(() => showError(msgUnsupported));
+  }
+</script>
