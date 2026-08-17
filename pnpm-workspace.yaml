@@ -1,5 +1,8 @@
 # 単一パッケージ構成。pnpm の設定置き場として使用する。
 # (将来 packages/* に分割する場合はここに packages を追記)
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
+
+# ネイティブバイナリのビルドを要するパッケージ。
+# esbuild は Astro のビルド、sharp は astro:assets の画像最適化に必要。
+allowBuilds:
+  esbuild: true
+  sharp: true
