@@ -2,7 +2,7 @@
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import HeroBackground from './HeroBackground.astro';
+import HeroPhoto from './HeroPhoto.astro';
 import Nav from './Nav.astro';
 interface Props {
   locale: Locale;
@@ -11,51 +11,81 @@ const { locale } = Astro.props;
 const playHref = getRelativeLocaleUrl(locale, 'playground');
 ---
 
-<div class="hero-shell relative overflow-hidden" data-hero-tone="light">
-  <HeroBackground />
-  <div class="relative z-[1]">
-    <Nav locale={locale} />
-  </div>
-  <header
-    class="container relative z-[1] pt-[3rem] pb-[4rem] min-h-[64vh] flex flex-col justify-center"
-  >
-    <h1 class="text-[clamp(3rem,12vw,6rem)] mb-[1rem] tracking-[-0.04em]">
-      {t(locale, 'hero_name')}
-    </h1>
-    <p class="text-muted text-[1.05rem] font-medium tracking-[0.02em] mb-[0.75rem]">
-      {t(locale, 'hero_role')}
-    </p>
-    <p class="text-[1.05rem] max-w-[34em] mb-[2.5rem]">{t(locale, 'hero_tagline')}</p>
-    <a
-      href={playHref}
-      class="inline-flex items-center gap-[0.5rem] border border-accent text-accent px-[1.2rem] py-[0.6rem] rounded-full no-underline text-[0.95rem] font-medium w-fit"
-    >
-      {t(locale, 'nav_playground')} <span aria-hidden="true">→</span>
-    </a>
+<div>
+  <Nav locale={locale} />
+  {/* 写真に文字を重ねない。スクリムで覆うと構図と色が死ぬため、
+      文字は写真の外に置く。スマホは縦積み、広い画面では左右に並べる */}
+  <header class="hero">
+    <div class="hero-media">
+      <HeroPhoto locale={locale} />
+    </div>
+    <div class="hero-body">
+      <h1 class="text-[clamp(3rem,12vw,5rem)] mb-[1rem] tracking-[-0.04em]">
+        {t(locale, 'hero_name')}
+      </h1>
+      <p class="text-muted text-[1.05rem] font-medium tracking-[0.02em] mb-[0.75rem]">
+        {t(locale, 'hero_role')}
+      </p>
+      <p class="text-[1.05rem] max-w-[34em] mb-[2.5rem]">{t(locale, 'hero_tagline')}</p>
+      <a
+        href={playHref}
+        class="inline-flex items-center gap-[0.5rem] border border-accent text-accent px-[1.2rem] py-[0.6rem] rounded-full no-underline text-[0.95rem] font-medium w-fit"
+      >
+        {t(locale, 'nav_playground')} <span aria-hidden="true">→</span>
+      </a>
+    </div>
   </header>
 </div>
 
 <style>
-  /* 暗い写真のときだけ配色を反転する。個別の要素に色を当てるのではなく
-     トークンを差し替えるのは、ナビ・本文・差し色までまとめて追従させるため。
-     色の指定箇所を増やすと、片方だけ直し忘れて読めなくなる */
-  .hero-shell[data-hero-tone='dark'] {
-    --fg: #ffffff;
-    --muted: color-mix(in srgb, #ffffff 76%, transparent);
-    --line: color-mix(in srgb, #ffffff 42%, transparent);
-    /* 差し色のティールは暗い背景では沈むため、明度を上げて可読性を保つ */
-    --accent: #7fd0c0;
-    color: var(--fg);
+  .hero {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: 4rem;
   }
 
-  /* トーン切り替えは 1.6s のクロスフェードに合わせて追従させる。
-     即座に色が変わると、写真が変わりきる前に文字だけ反転して目立つ */
-  .hero-shell {
-    transition: color 1.2s ease-in-out;
+  /* 写真は左右の余白を持たせず端まで見せる。
+     フルブリードにすると 1 枚の存在感が出て、作品として立つ */
+  .hero-media {
+    grid-area: photo;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-shell {
-      transition: none;
+
+  .hero-body {
+    grid-area: body;
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-inline: var(--pad);
+  }
+
+  .hero {
+    grid-template-areas:
+      'photo'
+      'body';
+  }
+
+  /* 広い画面では写真と文字を左右に分ける。
+     縦積みのままだと写真が横長に潰れ、文字が画面外に押し出される */
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-areas: 'body photo';
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      padding-bottom: 6rem;
+    }
+
+    .hero-body {
+      /* 左カラム内では中央寄せの最大幅ではなく、カラム幅に収める */
+      max-width: none;
+      margin: 0;
+      padding-inline: 0;
+      padding-left: var(--pad);
+    }
+
+    .hero-media {
+      /* 右端まで届かせる。左右対称に余白を取ると写真が小さく見える */
+      padding-right: var(--pad);
     }
   }
 </style>

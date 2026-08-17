@@ -1,0 +1,196 @@
+---
+import { Image } from 'astro:assets';
+import type { Locale } from '../i18n/utils';
+import { heroCaptions } from '../data/heroPhotos';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+// src/assets/hero/ 配下の画像を自動収集する。画像を足す/減らすだけで枚数が変わる。
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/hero/*.{jpg,jpeg,png,webp,avif}',
+  { eager: true },
+);
+// glob の列挙順は環境で揺れうるため、パス名で並びを固定する
+const photos = Object.keys(modules)
+  .sort()
+  .map((key) => {
+    const file = key.split('/').pop() as string;
+    const caption = heroCaptions[file];
+    return {
+      src: modules[key].default,
+      // キャプションは任意。未登録の写真は場所を出さず枚数表示だけにする
+      place: caption ? (locale === 'ja' ? caption.placeJa : caption.placeEn) : undefined,
+      year: caption?.year,
+    };
+  });
+
+// 枠の比率は最も縦長な 1 枚に合わせる。全枚数を切らずに収めるにはこれが下限で、
+// 固定値で持つと画像を差し替えたときに一番縦長の写真が切れる。
+const tallestRatio = Math.max(
+  ...photos.map((p) => (p.src.height ?? 1) / (p.src.width ?? 1)),
+);
+
+const INTERVAL = 6000;
+---
+
+{
+  photos.length > 0 && (
+    <figure class="hero-photo" data-interval={INTERVAL}>
+      {/* 写真は加工せず、そのままの構図と色で見せる。
+          比率が異なる写真が混在するため、枠側の高さは固定しない */}
+      <div class="hero-photo-stack" style={`--stack-ratio:${tallestRatio.toFixed(4)}`}>
+        {photos.map((photo, i) => (
+          <Image
+            src={photo.src}
+            alt=""
+            widths={[640, 1024, 1440]}
+            sizes="(min-width: 900px) 50vw, 100vw"
+            quality={82}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            class:list={['hero-photo-img', i === 0 && 'is-active']}
+            data-place={photo.place}
+            data-year={photo.year}
+          />
+        ))}
+      </div>
+      <figcaption class="hero-photo-cap">
+        <span class="hero-photo-meta">
+          {photos[0].place && photos[0].year
+            ? `${photos[0].place}, ${photos[0].year}`
+            : (photos[0].place ?? photos[0].year ?? '')}
+        </span>
+        {photos.length > 1 && (
+          <span class="hero-photo-count">
+            <span class="hero-photo-index">1</span>
+            {` / ${photos.length}`}
+          </span>
+        )}
+      </figcaption>
+    </figure>
+  )
+}
+
+<style>
+  .hero-photo {
+    margin: 0;
+  }
+
+  /* 枠の高さを固定するのは、切り替えのたびに下の文章が上下へ跳ねるのを防ぐため。
+     比率は最も縦長な 1 枚(--stack-ratio)に合わせ、どの写真も切らずに収める */
+  .hero-photo-stack {
+    position: relative;
+    display: grid;
+    aspect-ratio: 1 / var(--stack-ratio);
+  }
+
+  .hero-photo-img {
+    grid-area: 1 / 1;
+    /* 全体を見せる方針。cover にすると構図が切れる */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* 余白は上側にまとめ、写真の下端をキャプションに寄せる。
+       上下均等に散らすと写真とキャプションが離れ、
+       どの写真の説明なのか結び付きが弱くなる */
+    object-position: bottom;
+    opacity: 0;
+    transition: opacity 1.4s ease-in-out;
+  }
+  .hero-photo-img.is-active {
+    opacity: 1;
+  }
+
+  /* 写真は端まで見せるが、キャプションは本文と同じ余白に揃える。
+     文字が画面端に貼り付くのを防ぐ */
+  .hero-photo-cap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.6rem var(--pad) 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    /* 場所名の切り替えが視線を引かないよう、写真より遅く静かに変える */
+    transition: opacity 0.4s ease;
+  }
+
+  .hero-photo-count {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo-img {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.hero-photo').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.hero-photo-img')];
+    if (slides.length < 2) return;
+
+    const meta = root.querySelector<HTMLElement>('.hero-photo-meta');
+    const indexEl = root.querySelector<HTMLElement>('.hero-photo-index');
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    const interval = Number(root.dataset.interval ?? '6000');
+    let index = 0;
+    let timer: number | undefined;
+
+    function label(el: HTMLElement): string {
+      const place = el.dataset.place;
+      const year = el.dataset.year;
+      if (place && year) return `${place}, ${year}`;
+      return place ?? year ?? '';
+    }
+
+    function step() {
+      slides[index].classList.remove('is-active');
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('is-active');
+
+      if (meta) meta.textContent = label(slides[index]);
+      if (indexEl) indexEl.textContent = String(index + 1);
+    }
+
+    function start() {
+      if (timer === undefined) timer = window.setInterval(step, interval);
+    }
+    function stop() {
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+        timer = undefined;
+      }
+    }
+
+    // 非表示タブで回し続けても意味がないので止める
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop();
+      else start();
+    });
+
+    // 画面外では止める(下部セクション閲覧中の無駄な再描画を避ける)
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) start();
+            else stop();
+          }
+        },
+        { threshold: 0 },
+      );
+      io.observe(root);
+    } else {
+      start();
+    }
+  });
+</script>
