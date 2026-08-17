@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/yui666a/home#readme",
   "dependencies": {
-    "astro": "^6.4.6",
+    "astro": "^7.1.1",
     "three": "^0.184.0"
   },
   "devDependencies": {
