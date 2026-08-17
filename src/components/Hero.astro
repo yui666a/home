@@ -2,6 +2,8 @@
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import HeroBackground from './HeroBackground.astro';
+import Nav from './Nav.astro';
 interface Props {
   locale: Locale;
 }
@@ -9,9 +11,13 @@ const { locale } = Astro.props;
 const playHref = getRelativeLocaleUrl(locale, 'playground');
 ---
 
-<div class="relative overflow-hidden">
+<div class="hero-shell relative overflow-hidden" data-hero-tone="light">
+  <HeroBackground />
+  <div class="relative z-[1]">
+    <Nav locale={locale} />
+  </div>
   <header
-    class="container relative z-[1] pt-[6rem] pb-[4rem] min-h-[72vh] flex flex-col justify-center"
+    class="container relative z-[1] pt-[3rem] pb-[4rem] min-h-[64vh] flex flex-col justify-center"
   >
     <h1 class="text-[clamp(3rem,12vw,6rem)] mb-[1rem] tracking-[-0.04em]">
       {t(locale, 'hero_name')}
@@ -28,3 +34,28 @@ const playHref = getRelativeLocaleUrl(locale, 'playground');
     </a>
   </header>
 </div>
+
+<style>
+  /* 暗い写真のときだけ配色を反転する。個別の要素に色を当てるのではなく
+     トークンを差し替えるのは、ナビ・本文・差し色までまとめて追従させるため。
+     色の指定箇所を増やすと、片方だけ直し忘れて読めなくなる */
+  .hero-shell[data-hero-tone='dark'] {
+    --fg: #ffffff;
+    --muted: color-mix(in srgb, #ffffff 76%, transparent);
+    --line: color-mix(in srgb, #ffffff 42%, transparent);
+    /* 差し色のティールは暗い背景では沈むため、明度を上げて可読性を保つ */
+    --accent: #7fd0c0;
+    color: var(--fg);
+  }
+
+  /* トーン切り替えは 1.6s のクロスフェードに合わせて追従させる。
+     即座に色が変わると、写真が変わりきる前に文字だけ反転して目立つ */
+  .hero-shell {
+    transition: color 1.2s ease-in-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-shell {
+      transition: none;
+    }
+  }
+</style>

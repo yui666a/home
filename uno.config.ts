@@ -4,12 +4,15 @@ import { defineConfig } from 'unocss';
 export default defineConfig({
   presets: [presetWind4()],
   theme: {
+    // 値は global.css の CSS 変数を正本とし、ここでは参照だけを持つ。
+    // 固定値を書くとユーティリティ側が変数の上書きに追従せず、
+    // Hero のトーン反転のような局所的な配色変更が効かなくなる。
     colors: {
-      bg: '#fbfaf7',
-      fg: '#1a1a1a',
-      muted: '#6b6b6b',
-      line: '#e6e4dd',
-      accent: '#3a8d7f',
+      bg: 'var(--bg)',
+      fg: 'var(--fg)',
+      muted: 'var(--muted)',
+      line: 'var(--line)',
+      accent: 'var(--accent)',
     },
     // フォントファミリーは global.css の --font-sans が正本(body に適用)。
     // presetWind4 の theme.font とは重複するため、ここでは定義しない。
