@@ -1,0 +1,116 @@
+---
+// 一覧に WebGL コンテキストを並べると同時コンテキスト上限と負荷に当たるため、サムネは CSS だけで動かす。
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+<div class="thumb" aria-hidden="true">
+  {slug === 'particles' && <div class="particles" />}
+  {
+    slug === 'html-in-canvas' && (
+      <div class="stage">
+        <div class="mini-card">
+          <b>相曽 結</b>
+          Software Engineer
+          <u>github.com/yui666a</u>
+        </div>
+      </div>
+    )
+  }
+  {
+    slug === 'ar' && (
+      <div class="stage">
+        <div class="frame" />
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .thumb {
+    aspect-ratio: 4 / 3;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1b2a27, #0f1514);
+  }
+  .thumb * {
+    animation-play-state: var(--thumb-play, paused);
+  }
+  .particles {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgb(58 141 127 / 95%) 1.3px, transparent 1.7px),
+      radial-gradient(circle, rgb(58 141 127 / 55%) 1px, transparent 1.4px);
+    background-size:
+      28px 24px,
+      43px 37px;
+    animation: drift 9s linear infinite;
+  }
+  .stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 300px;
+  }
+  .mini-card {
+    width: 62%;
+    padding: 0.5rem 0.6rem;
+    background: #fbfaf7;
+    color: #1a1a1a;
+    border-radius: 6px;
+    font-size: 0.55rem;
+    line-height: 1.5;
+    animation: tilt 5s ease-in-out infinite alternate;
+  }
+  .mini-card b,
+  .mini-card u {
+    display: block;
+  }
+  .mini-card b {
+    font-size: 0.75rem;
+  }
+  .mini-card u {
+    color: var(--accent);
+  }
+  .frame {
+    width: 46%;
+    aspect-ratio: 91 / 55;
+    border: 1.5px solid rgb(58 141 127 / 90%);
+    border-radius: 3px;
+    animation: scan 3s ease-in-out infinite;
+  }
+  @keyframes drift {
+    to {
+      background-position:
+        28px 24px,
+        -43px 37px;
+    }
+  }
+  @keyframes tilt {
+    from {
+      transform: rotateY(-18deg) rotateX(6deg);
+    }
+    to {
+      transform: rotateY(18deg) rotateX(-6deg);
+    }
+  }
+  @keyframes scan {
+    0%,
+    100% {
+      transform: scale(0.96) rotate(-2deg);
+    }
+    50% {
+      transform: scale(1.02) rotate(2deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .thumb * {
+      animation: none;
+    }
+  }
+</style>

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { experiments } from '../src/data/experiments';
 import { skills } from '../src/data/skills';
 import { timeline } from '../src/data/timeline';
 import { works } from '../src/data/works';
@@ -42,5 +43,21 @@ describe('timeline data', () => {
       expect(e.title.ja).toBeTruthy();
       expect(e.title.en).toBeTruthy();
     }
+  });
+});
+
+describe('experiments data', () => {
+  it('各実験は URL に使える slug と ja/en の文言を持つ', () => {
+    expect(experiments.length).toBeGreaterThan(0);
+    for (const e of experiments) {
+      expect(e.slug).toMatch(/^[a-z0-9-]+$/);
+      expect(e.title.ja && e.title.en).toBeTruthy();
+      expect(e.summary.ja && e.summary.en).toBeTruthy();
+      expect(e.publishedAt).toMatch(/^\d{4}-\d{2}$/);
+    }
+  });
+  it('slug は一意', () => {
+    const slugs = experiments.map((e) => e.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
   });
 });
