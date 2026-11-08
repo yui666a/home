@@ -1,0 +1,209 @@
+---
+import PlaygroundBack from '../../../components/PlaygroundBack.astro';
+import { experiments } from '../../../data/experiments';
+import { links } from '../../../data/links';
+import { type Locale, locales, t } from '../../../i18n/ui';
+import Base from '../../../layouts/Base.astro';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const experiment = experiments.find((e) => e.slug === 'html-in-canvas')!;
+---
+
+<Base
+  locale={lang}
+  title={`${experiment.title[lang]} | Playground`}
+  description={experiment.summary[lang]}
+>
+  <main class="fixed inset-0 overflow-hidden">
+    <canvas id="hic-canvas" class="fixed inset-0 w-full h-full"></canvas>
+    <div
+      id="hic-fallback"
+      class="fixed inset-0 flex flex-col items-center justify-center gap-[1rem]"
+    >
+      <article id="hic-card">
+        <h1 class="text-[2.4rem] tracking-[-0.03em] m-0">{t(lang, 'hero_name')}</h1>
+        <p class="text-muted font-medium m-0">{t(lang, 'hero_role')}</p>
+        <p class="my-[1rem]">{t(lang, 'hero_tagline')}</p>
+        <ul class="list-none p-0 m-0 flex flex-wrap gap-x-[1rem]">
+          {
+            links.map((l) => (
+              <li>
+                <a href={l.url} target="_blank" rel="noopener" class="text-accent">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+      <p id="hic-note" hidden class="text-muted text-[0.85rem] m-0">{t(lang, 'hic_unsupported')}</p>
+    </div>
+    <PlaygroundBack locale={lang} />
+  </main>
+</Base>
+
+<style>
+  #hic-card {
+    width: 480px;
+    height: 300px;
+    max-width: calc(100vw - 2.5rem);
+    box-sizing: border-box;
+    padding: 2rem;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+</style>
+
+<script>
+  import * as THREE from 'three';
+  import {
+    type DrawableCanvas,
+    type ElementImageGL,
+    makeDrawable,
+  } from '../../../scripts/html-in-canvas';
+  import { addParticleField } from '../../../scripts/particle-field';
+
+  const canvas = document.getElementById('hic-canvas') as HTMLCanvasElement;
+  const card = document.getElementById('hic-card') as HTMLElement;
+  const fallback = document.getElementById('hic-fallback') as HTMLElement;
+  const note = document.getElementById('hic-note') as HTMLElement;
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const drawable = reduce ? null : makeDrawable(canvas);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+  camera.position.z = 14;
+  const tickParticles = addParticleField(scene);
+
+  function resize() {
+    renderer.setSize(innerWidth, innerHeight, false);
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  addEventListener('resize', resize);
+
+  const pointer = { x: 0, y: 0 };
+  addEventListener('pointermove', (e) => {
+    pointer.x = (e.clientX / innerWidth - 0.5) * 2;
+    pointer.y = (e.clientY / innerHeight - 0.5) * 2;
+  });
+
+  const gl = renderer.getContext() as ElementImageGL;
+  if (reduce) {
+    renderer.render(scene, camera);
+  } else if (drawable && 'texElementSubImage2D' in gl) {
+    run(drawable);
+  } else {
+    note.hidden = false;
+    renderer.setAnimationLoop(() => {
+      tickParticles();
+      renderer.render(scene, camera);
+    });
+  }
+
+  function run(drawable: DrawableCanvas) {
+    card.setAttribute('drawable', '');
+    canvas.append(card);
+    fallback.remove();
+
+    const cssWidth = card.offsetWidth;
+    const cssHeight = card.offsetHeight;
+    const pixelRatio = Math.min(devicePixelRatio, 2);
+    const blank = document.createElement('canvas');
+    blank.width = Math.round(cssWidth * pixelRatio);
+    blank.height = Math.round(cssHeight * pixelRatio);
+
+    const texture = new THREE.CanvasTexture(blank);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.generateMipmaps = false;
+    texture.minFilter = THREE.LinearFilter;
+    renderer.initTexture(texture);
+    const handle = (renderer.properties.get(texture) as { __webglTexture: WebGLTexture })
+      .__webglTexture;
+
+    const planeHeight = 6;
+    const planeWidth = (planeHeight * cssWidth) / cssHeight;
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(planeWidth, planeHeight),
+      new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true }),
+    );
+    mesh.position.z = 4;
+    scene.add(mesh);
+
+    let hovering = false;
+    card.addEventListener('pointerenter', () => (hovering = true));
+    card.addEventListener('pointerleave', () => (hovering = false));
+
+    // カードの border box (CSS px) から canvas グリッドへの写像。これがクリックと文字選択の当たり判定になる。
+    const elementToLocal = new THREE.Matrix4()
+      .makeTranslation(-planeWidth / 2, planeHeight / 2, 0)
+      .scale(new THREE.Vector3(planeWidth / cssWidth, -planeHeight / cssHeight, 1));
+    function syncGeometry() {
+      const w = canvas.width;
+      const h = canvas.height;
+      const clipToCanvas = new THREE.Matrix4().set(
+        w / 2,
+        0,
+        0,
+        w / 2,
+        0,
+        -h / 2,
+        0,
+        h / 2,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+      );
+      const m = clipToCanvas
+        .multiply(camera.projectionMatrix)
+        .multiply(camera.matrixWorldInverse)
+        .multiply(mesh.matrixWorld)
+        .multiply(elementToLocal);
+      drawable.updateElementGeometry(card, {
+        canvasTransform: new DOMMatrix(m.elements as unknown as number[]),
+      });
+    }
+
+    let sway = 0;
+    canvas.addEventListener('paint', () => {
+      renderer.state.bindTexture(gl.TEXTURE_2D, handle);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texElementSubImage2D(gl.TEXTURE_2D, 0, 0, 0, card, {
+        width: blank.width,
+        height: blank.height,
+      });
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+
+      // ホバー中は止める。動く的の上では文字をドラッグ選択できない。
+      if (!hovering) {
+        sway += 0.012;
+        mesh.rotation.y = Math.sin(sway) * 0.28;
+        mesh.rotation.x = Math.cos(sway * 0.7) * 0.1;
+        mesh.position.y = Math.sin(sway * 0.8) * 0.25;
+        camera.position.x += (pointer.x * 1.6 - camera.position.x) * 0.04;
+        camera.position.y += (-pointer.y * 1.2 - camera.position.y) * 0.04;
+        camera.lookAt(0, 0, 0);
+      }
+      tickParticles();
+      renderer.render(scene, camera);
+      syncGeometry();
+      drawable.requestPaint();
+    });
+    drawable.requestPaint();
+  }
+</script>

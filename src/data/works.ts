@@ -41,7 +41,7 @@ export const works: Work[] = [
       en: 'A business card built with WebAR that pops up a 3D model when you point a smartphone camera at it. Built with A-Frame and Three.js, it delivers an AR experience in the browser with no app install required.',
     },
     tags: ['WebAR', 'A-Frame', 'Three.js'],
-    url: 'https://yui666a.me/',
+    url: 'https://yui666a.me/ja/playground/ar',
   },
   {
     slug: 'sauna100-reservation',

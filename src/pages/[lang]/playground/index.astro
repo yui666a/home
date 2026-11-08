@@ -1,0 +1,96 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import ExperimentThumb from '../../../components/ExperimentThumb.astro';
+import { experiments } from '../../../data/experiments';
+import { type Locale, locales, t } from '../../../i18n/ui';
+import Base from '../../../layouts/Base.astro';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+
+const meta = {
+  ja: { title: 'Playground | 相曽 結', description: '相曽 結の実験場' },
+  en: { title: 'Playground | AISO, Hitoshi', description: 'Playground of AISO, Hitoshi' },
+} as const;
+
+const sorted = experiments.toSorted((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+---
+
+<Base locale={lang} title={meta[lang].title} description={meta[lang].description}>
+  <main class="container-wide section-y">
+    <a
+      href={getRelativeLocaleUrl(lang, '')}
+      class="text-[0.95rem] no-underline border-b border-line pb-[0.15rem] hover:text-accent hover:border-accent"
+    >
+      {t(lang, 'playground_back')}
+    </a>
+    <h1 class="text-[clamp(2rem,6vw,3rem)] tracking-[-0.03em] mt-[2rem] mb-[0.25rem]">
+      {t(lang, 'nav_playground')}
+    </h1>
+    <p class="text-muted mt-0 mb-[2.5rem]">{t(lang, 'playground_lead')}</p>
+    <ul
+      class="list-none p-0 m-0 grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-[1.25rem] items-start"
+    >
+      {
+        sorted.map((e) => (
+          <li data-ripple-host>
+            <a
+              data-ripple-card
+              href={getRelativeLocaleUrl(lang, `playground/${e.slug}`)}
+              class="experiment block no-underline border border-line rounded-[14px] overflow-hidden bg-white"
+            >
+              <ExperimentThumb slug={e.slug} />
+              <div class="p-[1rem]">
+                <span class="text-muted text-[0.75rem] tracking-[0.06em]">
+                  {e.publishedAt.replace('-', '.')}
+                </span>
+                <h2 class="text-[1.1rem] mt-[0.2rem] mb-[0.25rem]">{e.title[lang]}</h2>
+                <p class="summary text-muted text-[0.88rem] leading-[1.6] m-0">{e.summary[lang]}</p>
+                <div class="flex flex-wrap gap-[0.3rem] mt-[0.6rem]">
+                  {e.tags.map((tag) => (
+                    <span class="text-muted text-[0.72rem] border border-line rounded-full px-[0.5rem]">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Base>
+
+<style>
+  /* canvas 内のカードは行の高さへ stretch できないため、説明文の高さを揃えて列を整える */
+  .summary {
+    min-height: 3.2em;
+  }
+  .experiment h2 {
+    color: var(--fg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+  }
+  .experiment:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -3px;
+  }
+  li.in-view {
+    --thumb-play: running;
+  }
+</style>
+
+<script>
+  import { initCardRipple } from '../../../scripts/card-ripple';
+
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) entry.target.classList.toggle('in-view', entry.isIntersecting);
+  });
+  document.querySelectorAll('[data-ripple-host]').forEach((el) => io.observe(el));
+  initCardRipple(document);
+</script>

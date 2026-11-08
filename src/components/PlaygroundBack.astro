@@ -1,0 +1,16 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { type Locale, t } from '../i18n/ui';
+interface Props {
+  locale: Locale;
+  class?: string;
+}
+const { locale, class: className = 'text-fg' } = Astro.props;
+---
+
+<a
+  href={getRelativeLocaleUrl(locale, 'playground')}
+  class={`fixed top-[1.5rem] left-[clamp(1.25rem,5vw,2rem)] z-10 text-[0.95rem] no-underline border-b border-line pb-[0.15rem] hover:text-accent hover:border-accent ${className}`}
+>
+  {t(locale, 'playground_to_list')}
+</a>
